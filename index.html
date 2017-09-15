@@ -164,10 +164,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##二分查找（Binary Search)</p>
-<p>序列为递增（递减写法相同，需改变判断条件）</p>
-<p>###1）在序列中查找元素为x的元素的位置，没找到返回-1 </p>
-<p>代码：</p>
+        <h3 id="二分查找（Binary-Search"><a href="#二分查找（Binary-Search" class="headerlink" title="二分查找（Binary Search)"></a>二分查找（Binary Search)</h3><p>序列为递增（递减写法相同，需改变判断条件）</p>
+<h4 id="1）在序列中查找元素为x的元素的位置，没找到返回-1"><a href="#1）在序列中查找元素为x的元素的位置，没找到返回-1" class="headerlink" title="1）在序列中查找元素为x的元素的位置，没找到返回-1"></a>1）在序列中查找元素为x的元素的位置，没找到返回-1</h4><p>代码：</p>
 <pre><code>public int binarySearch(int x,int left,int right){
     while(left&lt;=right){
         int mid=left+(right-left)/2; //防止right+left超出int范围
@@ -180,13 +178,8 @@
     }
     return -1;
 }
-</code></pre><p>###2）求序列中第一个大于等于x元素的位置(考虑边界)</p>
-<ol>
-<li><p>如果A[mid]&gt;=x，说明第一个大于等于x位置一定在mid或mid的左侧，应该往左子区间[left,mid]继续查询，right=mid</p>
-</li>
-<li><p>如果A[mid]&lt;x，说明第一个大于等于x位置一定在mid右侧，应该往右子区间[mid+1,right]继续查询，left=mid+1</p>
-</li>
-</ol>
+</code></pre><h4 id="2）求序列中第一个大于等于x元素的位置-考虑边界"><a href="#2）求序列中第一个大于等于x元素的位置-考虑边界" class="headerlink" title="2）求序列中第一个大于等于x元素的位置(考虑边界)"></a>2）求序列中第一个大于等于x元素的位置(考虑边界)</h4><p>1) 如果A[mid]&gt;=x，说明第一个大于等于x位置一定在mid或mid的左侧，应该往左子区间[left,mid]继续查询，right=mid</p>
+<p>2) 如果A[mid]&lt;x，说明第一个大于等于x位置一定在mid右侧，应该往右子区间[mid+1,right]继续查询，left=mid+1</p>
 <p>代码：</p>
 <pre><code>int lower_bound(int A[],int left,int right,int x){
     while(left&lt;right){   //对于[left,right]来讲，left==right意味找到唯一的位置
@@ -207,13 +200,8 @@
 <li><p>二分下界是0，上界是n,<strong>可能查询元素的比序列所有元素都大</strong></p>
 </li>
 </ul>
-<p>###3）序列中第一个大于x的元素的位置(考虑边界)</p>
-<ol>
-<li><p>如果A[mid]&gt;x，说明第一个大于x元素一定在mid位置或mid的左侧</p>
-</li>
-<li><p>如果A[mid]&lt;=x,说明第一个大于x元素的位置一定在mid的右侧</p>
-</li>
-</ol>
+<h4 id="3）序列中第一个大于x的元素的位置-考虑边界"><a href="#3）序列中第一个大于x的元素的位置-考虑边界" class="headerlink" title="3）序列中第一个大于x的元素的位置(考虑边界)"></a>3）序列中第一个大于x的元素的位置(考虑边界)</h4><p>1) 如果A[mid]&gt;x，说明第一个大于x元素一定在mid位置或mid的左侧</p>
+<p>2) 如果A[mid]&lt;=x,说明第一个大于x元素的位置一定在mid的右侧</p>
 <p>代码：</p>
 <pre><code>int upper_bound(int A[],int left,int right,int x){
     while(left&lt;right){   //对于[left,right]来讲，left==right意味找到唯一的位置
@@ -228,8 +216,7 @@
 </code></pre><p>和lower_bound唯一区别是<strong>A[mid]&gt;=x,改成A[mid]&gt;x</strong></p>
 <p>二分法拓展：</p>
 <p>·给定一个定义在[L,R]上的单调函数f(x)，求方程f(x)=0的根（如求√2 的近似值）</p>
-<p>##快速幂(二分幂)</p>
-<p>模运算与基本四则运算有些相似，但是除法例外。其规则如下：</p>
+<h3 id="快速幂-二分幂"><a href="#快速幂-二分幂" class="headerlink" title="快速幂(二分幂)"></a>快速幂(二分幂)</h3><p>模运算与基本四则运算有些相似，但是除法例外。其规则如下：</p>
 <pre><code>i. (a + b) % m = (a % m + b % m) % m （1）
 ii. (a - b) % m = (a % m - b % m) % m （2）
 iii. (a * b) % m = (a % m * b % m) % m （3）
