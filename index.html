@@ -178,80 +178,10 @@
     }
     return -1;
 }
-</code></pre><h4 id="2）求序列中第一个大于等于x元素的位置-考虑边界"><a href="#2）求序列中第一个大于等于x元素的位置-考虑边界" class="headerlink" title="2）求序列中第一个大于等于x元素的位置(考虑边界)"></a>2）求序列中第一个大于等于x元素的位置(考虑边界)</h4><p>1) 如果A[mid]&gt;=x，说明第一个大于等于x位置一定在mid或mid的左侧，应该往左子区间[left,mid]继续查询，right=mid</p>
-<p>2) 如果A[mid]&lt;x，说明第一个大于等于x位置一定在mid右侧，应该往右子区间[mid+1,right]继续查询，left=mid+1</p>
-<p>代码：</p>
-<pre><code>int lower_bound(int A[],int left,int right,int x){
-    while(left&lt;right){   //对于[left,right]来讲，left==right意味找到唯一的位置
-        int mid=left+(right-left)/2;
-        if(x&lt;=A[mid])
-            right=mid;
-        else
-            left=mid+1;
-    }
-    return left;
-}
-</code></pre><p>注意点：</p>
-<ul>
-<li><p><strong>循环条件为left&lt;right，而非left&lt;=right</strong>，因为无需判断x本身是否存在</p>
-</li>
-<li><p><strong>left==right时while循环就停止</strong>，返回结果可以是left也可以是right</p>
-</li>
-<li><p>二分下界是0，上界是n,<strong>可能查询元素的比序列所有元素都大</strong></p>
-</li>
-</ul>
-<h4 id="3）序列中第一个大于x的元素的位置-考虑边界"><a href="#3）序列中第一个大于x的元素的位置-考虑边界" class="headerlink" title="3）序列中第一个大于x的元素的位置(考虑边界)"></a>3）序列中第一个大于x的元素的位置(考虑边界)</h4><p>1) 如果A[mid]&gt;x，说明第一个大于x元素一定在mid位置或mid的左侧</p>
-<p>2) 如果A[mid]&lt;=x,说明第一个大于x元素的位置一定在mid的右侧</p>
-<p>代码：</p>
-<pre><code>int upper_bound(int A[],int left,int right,int x){
-    while(left&lt;right){   //对于[left,right]来讲，left==right意味找到唯一的位置
-        int mid=left+(right-left)/2;
-        if(x&lt;A[mid])
-            right=mid;
-        else
-            left=mid+1;
-    }
-    return left;
-}
-</code></pre><p>和lower_bound唯一区别是<strong>A[mid]&gt;=x,改成A[mid]&gt;x</strong></p>
-<p>二分法拓展：</p>
-<p>·给定一个定义在[L,R]上的单调函数f(x)，求方程f(x)=0的根（如求√2 的近似值）</p>
-<h3 id="快速幂-二分幂"><a href="#快速幂-二分幂" class="headerlink" title="快速幂(二分幂)"></a>快速幂(二分幂)</h3><p>模运算与基本四则运算有些相似，但是除法例外。其规则如下：</p>
-<pre><code>i. (a + b) % m = (a % m + b % m) % m （1）
-ii. (a - b) % m = (a % m - b % m) % m （2）
-iii. (a * b) % m = (a % m * b % m) % m （3）
-iv. a ^ b % m = ((a % m)^b) % m （4）
-</code></pre><p>问题：给定3个整数，a,b,m求a^b%m （m&gt;a，如果初始时a%m；）</p>
-<p>递归方法：</p>
-<p>1）如果b是奇数，那么有a^b=a∗a^(b−1)</p>
-<p>2）如果b是偶数，那么有a^b=a^(b/2)∗a^(b/2)</p>
-<p>代码：</p>
-<pre><code>long long binaryPow(long long a,long long b,long long m){
-    if(b==0)
-        return 1;
-    if(b%2==1)
-        return a*binaryPow(a,b-1,m)%m;
-    else{
-        long long mul=binaryPow(a,b/2,m);
-        return mul*mul%m;
-    }
-}
-</code></pre><p>迭代方法：</p>
-<p>a^b=a^2k…∗a^4∗a^2∗a^1</p>
-<p>代码：</p>
-<pre><code>long long binaryPow(long long a,long long b,long long m){
-    long long ans=1;
-    while(b&gt;0){
-        if(b%2==1){
-            ans=ans*a%m;
-        }
-        a=a*a%m;
-        b/=2;
-    }
-    return ans;
-}
-</code></pre><p><strong>迭代方法和递归方法时间复杂度相同。</strong></p>
-
+</code></pre>
+        
+          <a class="article-more-a" href="/2017/09/15/二分/#more">more >></a>
+        
       
 
       

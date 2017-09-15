@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="LuoYupeng Blog">
 <meta property="og:description" content="二分查找（Binary Search)序列为递增（递减写法相同，需改变判断条件） 1）在序列中查找元素为x的元素的位置，没找到返回-1代码： public int binarySearch(int x,int left,int right){     while(left&amp;lt;=right){         int mid=left+(right-left)/2; //防止right+left">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-15T08:06:24.672Z">
+<meta property="og:updated_time" content="2017-09-15T08:42:25.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二分">
 <meta name="twitter:description" content="二分查找（Binary Search)序列为递增（递减写法相同，需改变判断条件） 1）在序列中查找元素为x的元素的位置，没找到返回-1代码： public int binarySearch(int x,int left,int right){     while(left&amp;lt;=right){         int mid=left+(right-left)/2; //防止right+left">
@@ -181,7 +181,8 @@
     }
     return -1;
 }
-</code></pre><h4 id="2）求序列中第一个大于等于x元素的位置-考虑边界"><a href="#2）求序列中第一个大于等于x元素的位置-考虑边界" class="headerlink" title="2）求序列中第一个大于等于x元素的位置(考虑边界)"></a>2）求序列中第一个大于等于x元素的位置(考虑边界)</h4><p>1) 如果A[mid]&gt;=x，说明第一个大于等于x位置一定在mid或mid的左侧，应该往左子区间[left,mid]继续查询，right=mid</p>
+</code></pre><a id="more"></a>
+<h4 id="2）求序列中第一个大于等于x元素的位置-考虑边界"><a href="#2）求序列中第一个大于等于x元素的位置-考虑边界" class="headerlink" title="2）求序列中第一个大于等于x元素的位置(考虑边界)"></a>2）求序列中第一个大于等于x元素的位置(考虑边界)</h4><p>1) 如果A[mid]&gt;=x，说明第一个大于等于x位置一定在mid或mid的左侧，应该往左子区间[left,mid]继续查询，right=mid</p>
 <p>2) 如果A[mid]&lt;x，说明第一个大于等于x位置一定在mid右侧，应该往右子区间[mid+1,right]继续查询，left=mid+1</p>
 <p>代码：</p>
 <pre><code>int lower_bound(int A[],int left,int right,int x){
