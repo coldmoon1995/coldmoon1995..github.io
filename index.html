@@ -151,13 +151,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/13/hello-world/">欢迎使用Markdown编辑器写博客</a>
+      <a class="article-title" href="/2017/09/15/hello-world/">欢迎使用Markdown编辑器写博客</a>
     </h1>
   
 
         
-        <a href="/2017/09/13/hello-world/" class="archive-article-date">
-  	<time datetime="2017-09-13T13:08:49.915Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-13</time>
+        <a href="/2017/09/15/hello-world/" class="archive-article-date">
+  	<time datetime="2017-09-15T03:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
 </a>
         
       </header>
@@ -301,7 +301,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">随笔1</a>
         		</li>
       		
 		</ul>
@@ -311,7 +311,180 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/13/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/09/15/hello-world/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-二分" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/15/二分/">二分</a>
+    </h1>
+  
+
+        
+        <a href="/2017/09/15/二分/" class="archive-article-date">
+  	<time datetime="2017-09-15T03:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##二分查找（Binary Search)</p>
+<p>序列为递增（递减写法相同，需改变判断条件）</p>
+<p>###1）在序列中查找元素为x的元素的位置，没找到返回-1 </p>
+<p>代码：</p>
+<pre><code>public int binarySearch(int x,int left,int right){
+    while(left&lt;=right){
+        int mid=left+(right-left)/2; //防止right+left超出int范围
+        if(x&lt;A[mid]) 
+            right=mid-1;
+        else if(x&gt;A[mid]) 
+            left=mid+1;
+        else
+            return mid;
+    }
+    return -1;
+}
+</code></pre><p>###2）求序列中第一个大于等于x元素的位置(考虑边界)</p>
+<ol>
+<li><p>如果A[mid]&gt;=x，说明第一个大于等于x位置一定在mid或mid的左侧，应该往左子区间[left,mid]继续查询，right=mid</p>
+</li>
+<li><p>如果A[mid]&lt;x，说明第一个大于等于x位置一定在mid右侧，应该往右子区间[mid+1,right]继续查询，left=mid+1</p>
+</li>
+</ol>
+<p>代码：</p>
+<pre><code>int lower_bound(int A[],int left,int right,int x){
+    while(left&lt;right){   //对于[left,right]来讲，left==right意味找到唯一的位置
+        int mid=left+(right-left)/2;
+        if(x&lt;=A[mid])
+            right=mid;
+        else
+            left=mid+1;
+    }
+    return left;
+}
+</code></pre><p>注意点：</p>
+<ul>
+<li><p><strong>循环条件为left&lt;right，而非left&lt;=right</strong>，因为无需判断x本身是否存在</p>
+</li>
+<li><p><strong>left==right时while循环就停止</strong>，返回结果可以是left也可以是right</p>
+</li>
+<li><p>二分下界是0，上界是n,<strong>可能查询元素的比序列所有元素都大</strong></p>
+</li>
+</ul>
+<p>###3）序列中第一个大于x的元素的位置(考虑边界)</p>
+<ol>
+<li><p>如果A[mid]&gt;x，说明第一个大于x元素一定在mid位置或mid的左侧</p>
+</li>
+<li><p>如果A[mid]&lt;=x,说明第一个大于x元素的位置一定在mid的右侧</p>
+</li>
+</ol>
+<p>代码：</p>
+<pre><code>int upper_bound(int A[],int left,int right,int x){
+    while(left&lt;right){   //对于[left,right]来讲，left==right意味找到唯一的位置
+        int mid=left+(right-left)/2;
+        if(x&lt;A[mid])
+            right=mid;
+        else
+            left=mid+1;
+    }
+    return left;
+}
+</code></pre><p>和lower_bound唯一区别是<strong>A[mid]&gt;=x,改成A[mid]&gt;x</strong></p>
+<p>二分法拓展：</p>
+<p>·给定一个定义在[L,R]上的单调函数f(x)，求方程f(x)=0的根（如求√2 的近似值）</p>
+<p>##快速幂(二分幂)</p>
+<p>模运算与基本四则运算有些相似，但是除法例外。其规则如下：</p>
+<pre><code>i. (a + b) % m = (a % m + b % m) % m （1）
+ii. (a - b) % m = (a % m - b % m) % m （2）
+iii. (a * b) % m = (a % m * b % m) % m （3）
+iv. a ^ b % m = ((a % m)^b) % m （4）
+</code></pre><p>问题：给定3个整数，a,b,m求a^b%m （m&gt;a，如果初始时a%m；）</p>
+<p>递归方法：</p>
+<p>1）如果b是奇数，那么有a^b=a∗a^(b−1)</p>
+<p>2）如果b是偶数，那么有a^b=a^(b/2)∗a^(b/2)</p>
+<p>代码：</p>
+<pre><code>long long binaryPow(long long a,long long b,long long m){
+    if(b==0)
+        return 1;
+    if(b%2==1)
+        return a*binaryPow(a,b-1,m)%m;
+    else{
+        long long mul=binaryPow(a,b/2,m);
+        return mul*mul%m;
+    }
+}
+</code></pre><p>迭代方法：</p>
+<p>a^b=a^2k…∗a^4∗a^2∗a^1</p>
+<p>代码：</p>
+<pre><code>long long binaryPow(long long a,long long b,long long m){
+    long long ans=1;
+    while(b&gt;0){
+        if(b%2==1){
+            ans=ans*a%m;
+        }
+        a=a*a%m;
+        b/=2;
+    }
+    return ans;
+}
+</code></pre><p><strong>迭代方法和递归方法时间复杂度相同。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/15/二分/">展开全文 >></a>
         </p>
       
 
@@ -423,11 +596,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color4">随笔1</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
             
             <div class="clearfix"></div>
