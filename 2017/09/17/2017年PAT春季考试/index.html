@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | LuoYupeng Blog</title>
+  <title>2017年9月PAT-A考试 | LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="LuoYupeng Blog">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="本次考试难度不大，大多为常规题，只有最后一道红黑树的题需要思考，但写法和平衡二叉树类似，唯一区别是平衡二叉树是记录每个结点的高度，而该题需要记录红黑树每个结点黑结点（从该结点到叶子结点黑结点个数）的高度。题主由于提前一个月刷了算法笔记（大概刷了60道），最后考了满分。 考试心得：PAT官网甲级练习题一定要刷，很多测试点套路都是一样的，像B题链表题，基本和以前一样。PAT考试基本上类的排序，图的遍历">
+<meta name="keywords" content="算法题,随笔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2017年9月PAT-A考试">
+<meta property="og:url" content="http://yoursite.com/2017/09/17/2017年PAT春季考试/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
+<meta property="og:description" content="本次考试难度不大，大多为常规题，只有最后一道红黑树的题需要思考，但写法和平衡二叉树类似，唯一区别是平衡二叉树是记录每个结点的高度，而该题需要记录红黑树每个结点黑结点（从该结点到叶子结点黑结点个数）的高度。题主由于提前一个月刷了算法笔记（大概刷了60道），最后考了满分。 考试心得：PAT官网甲级练习题一定要刷，很多测试点套路都是一样的，像B题链表题，基本和以前一样。PAT考试基本上类的排序，图的遍历">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/pat2017.jpg">
+<meta property="og:image" content="http://yoursite.com/images/patD.jpg">
+<meta property="og:updated_time" content="2017-09-17T13:44:54.680Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LuoYupeng Blog">
+<meta name="twitter:title" content="2017年9月PAT-A考试">
+<meta name="twitter:description" content="本次考试难度不大，大多为常规题，只有最后一道红黑树的题需要思考，但写法和平衡二叉树类似，唯一区别是平衡二叉树是记录每个结点的高度，而该题需要记录红黑树每个结点黑结点（从该结点到叶子结点黑结点个数）的高度。题主由于提前一个月刷了算法笔记（大概刷了60道），最后考了满分。 考试心得：PAT官网甲级练习题一定要刷，很多测试点套路都是一样的，像B题链表题，基本和以前一样。PAT考试基本上类的排序，图的遍历">
+<meta name="twitter:image" content="http://yoursite.com/images/pat2017.jpg">
   
     <link rel="alternative" href="/atom.xml" title="LuoYupeng Blog" type="application/atom+xml">
   
@@ -138,36 +146,502 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-2017年PAT春季考试" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/17/2017年PAT春季考试/" class="archive-article-date">
-  	<time datetime="2017-09-17T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-17</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/17/2017年PAT春季考试/">2017年9月PAT-A考试</a>
+    <h1 class="article-title" itemprop="name">
+      2017年9月PAT-A考试
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/09/17/2017年PAT春季考试/" class="archive-article-date">
+  	<time datetime="2017-09-17T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本次考试难度不大，大多为常规题，只有最后一道红黑树的题需要思考，但写法和平衡二叉树类似，唯一区别是平衡二叉树是记录每个结点的高度，而该题需要记录红黑树每个结点黑结点（从该结点到叶子结点黑结点个数）的高度。<br>题主由于提前一个月刷了算法笔记（大概刷了60道），最后考了满分。</p>
+<p><strong>考试心得：</strong>PAT官网甲级练习题一定要刷，很多测试点套路都是一样的，像B题链表题，基本和以前一样。<br>PAT考试基本上类的排序，图的遍历，二叉树遍历和平衡二叉树都是必考题，算法笔记上有这类题的模板，多看看，基本上都能构考比较高的分数。</p>
+<p><img src="/images/pat2017.jpg" alt=""><br><a id="more"></a></p>
+<h3 id="A-Cut-Integer-20"><a href="#A-Cut-Integer-20" class="headerlink" title="A. Cut Integer (20)"></a>A. Cut Integer (20)</h3><pre><code>Cutting an integer means to cut a K digits long integer Z into two integers of (K/2) digits
+ long integers A and B. For example, after cutting Z = 167334, we have A = 167 and B = 334.
+ It is interesting to see that Z can be devided by the product of A and B, as 167334 / (167
+ x 334) = 3. Given an integer Z, you are supposed to test if it is such an integer.
+
+Input Specification:
+
+Each input file contains one test case. For each case, the first line gives a positive 
+integer N (&lt;= 20). Then N lines follow, each gives an integer Z (10&lt;=Z&lt;=231). It is 
+guaranteed that the number of digits of Z is an even number.
+
+Output Specification:
+
+For each case, print a single line &quot;Yes&quot; if it is such a number, or &quot;No&quot; if not.
+
+Sample Input:
+3
+167334
+2333
+12345678
+Sample Output:
+Yes
+No
+No
+</code></pre><p>解题思路：简单题，只要使用stoi方法，将string转换为int即可</p>
+<p><strong>注意点：</strong>如果不考虑切割后出现0（如100000，切割后为100,和000），会出现浮点错误<br>代码：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;unordered_map&gt;
+#include &lt;unordered_set&gt;
+#include &lt;algorithm&gt;
+#include &lt;set&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        string s;
+        cin &gt;&gt; s;
+        int a = stoi(s);
+        int a1 = stoi(s.substr(0, s.size() / 2));
+        int a2 = stoi(s.substr(s.size() / 2));
+        if (a1 != 0 &amp;&amp; a2 != 0 &amp;&amp; a % (a1*a2) == 0) {
+            cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+        }
+        else
+            cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre><h3 id="B-Splitting-A-Linked-List-25"><a href="#B-Splitting-A-Linked-List-25" class="headerlink" title="B. Splitting A Linked List (25)"></a>B. Splitting A Linked List (25)</h3><pre><code>Given a singly linked list, you are supposed to rearrange its elements so that all the 
+negative values appear before all of the non-negatives, and all the values in [0, K] appear
+ before all those greater than K. The order of the elements inside each class must not be 
+changed. For example, given the list being 18→7→-4→0→5→-6→10→11→-2 and K being 10, you must
+ output -4→-6→-2→7→0→5→10→18→11.
+
+Input Specification:
+
+Each input file contains one test case. For each case, the first line contains the address
+ of the first node, a positive N (&lt;= 105) which is the total number of nodes, and a positive
+ K (&lt;=1000). The address of a node is a 5-digit nonnegative integer, and NULL is represented
+ by -1.
+
+Then N lines follow, each describes a node in the format:
+
+Address Data Next
+
+where Address is the position of the node, Data is an integer in [-105, 105], and Next is 
+the position of the next node. It is guaranteed that the list is not empty.
+
+Output Specification:
+
+For each case, output in order (from beginning to the end of the list) the resulting linked
+ list. Each node occupies a line, and is printed in the same format as in the input.
+
+Sample Input:
+00100 9 10
+23333 10 27777
+00000 0 99999
+00100 18 12309
+68237 -6 23333
+33218 -4 00000
+48652 -2 -1
+99999 5 68237
+27777 11 48652
+12309 7 33218
+Sample Output:
+33218 -4 68237
+68237 -6 48652
+48652 -2 12309
+12309 7 00000
+00000 0 99999
+99999 5 23333
+23333 10 00100
+00100 18 27777
+27777 11 -1
+</code></pre><p>解题思路：用vector存储每个结点的信息包括（val、addr和next，id），id为从start遍历出现的位置，对其进行排序，排序规则为：</p>
+<p>（1） 如果均为负数或均为[0,k]或均为&gt;k，则比较其位置;<br>（2） 否则负数在前，然后[0,k]，再&gt;k;</p>
+<p><strong>注意点：</strong>可能不是单链表，中间结点next就出现-1；无效值不打印结果</p>
+<p>代码：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;math.h&gt;
+#include &lt;string&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unordered_map&gt;
+using namespace std;
+int k;
+struct Node {
+    int id,val;
+    int address, next;
+    bool isValid;
+    Node() {
+        isValid = false;
+    }
+};
+bool cmp(Node node1, Node node2) {
+    if (node1.isValid == false) 
+        return false;
+    if (node2.isValid == false)
+        return true;
+    if (node1.val&lt;0) {
+        if (node2.val&lt;0) 
+            return node1.id&lt;node2.id;
+        else 
+            return true;
+    }
+    else if (node1.val &gt;= 0 &amp;&amp; node1.val &lt;= k) {
+        if (node2.val&lt;0) {
+            return false;
+        }
+        else if (node2.val &gt;= 0 &amp;&amp; node2.val &lt;= k) 
+            return node1.id&lt;node2.id;
+        else
+            return true;
+    }
+    else {
+        if (node2.val&gt;k) 
+            return node1.id&lt;node2.id;
+        else {
+            return false;
+        }
+    }
+}
+int main() {
+    int start;
+    int n;
+    scanf(&quot;%d %d %d&quot;, &amp;start, &amp;n, &amp;k);
+    unordered_map&lt;int, int&gt; map;
+    unordered_map&lt;int, int&gt; nextMap;
+    vector&lt;Node&gt; v;
+    for (int i = 0; i&lt;n; i++) {
+        int addr, val, next;
+        scanf(&quot;%d%d%d&quot;, &amp;addr, &amp;val, &amp;next);
+        Node node;
+        node.address = addr; node.next = next; node.val = val; node.k = k;
+        map[addr] = i;
+        v.push_back(node);
+        nextMap[addr] = next;
+    }
+    int tmp = start;
+    int id = 0;
+    while (tmp != -1) {
+        v[map[tmp]].id = id;
+        v[map[tmp]].isValid = true;
+        id++;
+        tmp = nextMap[tmp];
+    }
+    sort(v.begin(), v.end(), cmp);
+    for (int i = 0; i&lt;id; i++) {
+        if (i != 0) {
+            printf(&quot;%05d\n&quot;, v[i].address);
+        }
+        printf(&quot;%05d %d &quot;, v[i].address, v[i].val);
+    }
+    printf(&quot;-1\n&quot;);
+}
+</code></pre><h3 id="C-Vertex-Cover-25"><a href="#C-Vertex-Cover-25" class="headerlink" title="C. Vertex Cover (25)"></a>C. Vertex Cover (25)</h3><pre><code>A vertex cover of a graph is a set of vertices such that each edge of the graph is incident
+ to at least one vertex of the set. Now given a graph with several vertex sets, you are 
+supposed to tell if each of them is a vertex cover or not.
+
+Input Specification:
+
+Each input file contains one test case. For each case, the first line gives two positive 
+integers N and M (both no more than 104), being the total numbers of vertices and the edges,
+ respectively. Then M lines follow, each describes an edge by giving the indices (from 0 to
+ N-1) of the two ends of the edge.
+
+After the graph, a positive integer K (&lt;= 100) is given, which is the number of queries. 
+Then K lines of queries follow, each in the format:
+
+Nv v[1] v[2] ... v[Nv]
+
+where Nv is the number of vertices in the set, and v[i]&apos;s are the indices of the vertices.
+
+Output Specification:
+
+For each query, print in a line &quot;Yes&quot; if the set is a vertex cover, or &quot;No&quot; if not.
+
+Sample Input:
+10 11
+8 7
+6 8
+4 5
+8 4
+8 1
+1 2
+1 4
+9 8
+9 1
+1 0
+2 4
+5
+4 0 3 8 4
+6 6 1 7 5 4 9
+3 1 8 4
+2 2 8
+7 9 8 7 6 5 4 2
+Sample Output:
+No
+Yes
+Yes
+No
+No
+</code></pre><p>解题思路：用邻接表构建图（<strong>注意邻接矩阵会超时</strong>），对于每个query进行边遍历，判断是否有一点在set中，如果两点都不在，输出”No”，否则为”Yes”.<br><strong>注意：</strong>可能存在不出现在图中的点，所有输入时判断哪些点在图中。<br>代码：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;math.h&gt;
+#include &lt;string&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unordered_map&gt;
+#include &lt;unordered_set&gt;
+using namespace std;
+
+int main() {
+    int n, m;
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    vector&lt;vector&lt;int&gt; &gt; G(n);
+    vector&lt;bool&gt; isHas(n, false);
+    for (int i = 0; i&lt;m; i++) {
+        int v1, v2;
+        scanf(&quot;%d%d&quot;, &amp;v1, &amp;v2);
+        G[v1].push_back(v2);
+        G[v2].push_back(v1);
+        if (isHas[v1] == false) {
+            isHas[v1] = true;
+        }
+        if (isHas[v2] == false) {
+            isHas[v2] = true;
+        }
+
+    }
+    int k;
+    scanf(&quot;%d&quot;, &amp;k);
+    for (int i = 0; i&lt;k; i++) {
+        vector&lt;bool&gt; vis(n, false);
+        int nv;
+        unordered_set&lt;int&gt; set;
+        scanf(&quot;%d&quot;, &amp;nv);
+        int ans = 0;
+        for (int j = 0; j&lt;nv; j++) {
+            int u;
+            scanf(&quot;%d&quot;, &amp;u);
+            set.insert(u);
+        }
+        bool isTrue = true;
+        for (int j = 0; j&lt;G.size(); j++) {
+            if (isHas[j] == false)
+                continue;
+            for (int l = 0; l&lt;G[j].size(); l++) {
+                if (set.find(j) == set.end() &amp;&amp; set.find(G[j][l]) == set.end()) {
+                    isTrue = false;
+                    break;
+                }
+            }
+        }
+        if (isTrue)
+            printf(&quot;Yes\n&quot;);
+        else
+            printf(&quot;No\n&quot;);
+    }
+}
+</code></pre><h3 id="D-Is-It-A-Red-Black-Tree-30"><a href="#D-Is-It-A-Red-Black-Tree-30" class="headerlink" title="D. Is It A Red-Black Tree (30)"></a>D. Is It A Red-Black Tree (30)</h3><pre><code>There is a kind of balanced binary search tree named red-black tree in the data structure.
+ It has the following 5 properties:
+
+(1) Every node is either red or black.
+(2) The root is black.
+(3) Every leaf (NULL) is black.
+(4) If a node is red, then both its children are black.
+(5) For each node, all simple paths from the node to descendant leaves contain the same 
+number of black nodes.
+
+For example, the tree in Figure 1 is a red-black tree, while the ones in Figure 2 and 3 are
+ not.
+</code></pre><p><img src="/images/patD.jpg" alt=""></p>
+<pre><code>For each given binary search tree, you are supposed to tell if it is a legal red-black tree.
+
+Input Specification:
+Each input file contains several test cases. The first line gives a positive integer K 
+(&lt;=30) which is the total number of cases. For each case, the first line gives a positive 
+integer N (&lt;=30), the total number of nodes in the binary tree. The second line gives the 
+preorder traversal sequence of the tree. While all the keys in a tree are positive integers,
+ we use negative signs to represent red nodes. All the numbers in a line are separated by a
+ space. The sample input cases correspond to the trees shown in Figure 1, 2 and 3.
+Output Specification:
+For each test case, print in a line &quot;Yes&quot; if the given tree is a red-black tree, or &quot;No&quot; if
+ not.
+Sample Input:
+3
+9
+7 -2 1 5 -4 -11 8 14 -15
+9
+11 -2 1 -7 5 -4 8 14 -15
+8
+10 -7 5 -6 8 15 -11 17
+Sample Output:
+Yes
+No
+No
+</code></pre><p>解题思路：先序遍历即二叉搜索树的插入顺序，使用先序遍历构建一棵红黑树。每次插入都需要更新路径上的黑结点个数（思路和平衡二叉树更新高度相同），最后对红黑树进行判断，对每个结点进行遍历，看是否满足红黑树的性质。</p>
+<p>代码：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;math.h&gt;
+#include &lt;string&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unordered_map&gt;
+using namespace std;
+class Node {
+public:
+    int val, height;
+    Node *left, *right;
+    bool isBlack;
+    Node() {
+        height = 0;
+        left = NULL; right = NULL;
+        isBlack = true;
+    }
+};
+int getHeight(Node *root) {
+    if (root == NULL)
+        return 0;
+    return root-&gt;height;
+}
+void updateHeight(Node* &amp;root) {
+    if (root-&gt;isBlack)
+        root-&gt;height = max(getHeight(root-&gt;left), getHeight(root-&gt;right)) + 1;
+    else
+        root-&gt;height = max(getHeight(root-&gt;left), getHeight(root-&gt;right));
+}
+int getBalanceFactor(Node* &amp;root) {
+    return getHeight(root-&gt;left) - getHeight(root-&gt;right);
+}
+void insert(Node* &amp;root, int x) {
+    if (root == NULL) {
+        root = new Node;
+        if (x&lt;0) {
+            root-&gt;val = -x;
+            root-&gt;isBlack = false;
+        }
+        else {
+            root-&gt;val = x;
+        }
+        updateHeight(root);
+        return;
+    }
+    if (abs(x)&lt;root-&gt;val) {
+        insert(root-&gt;left, x);
+        updateHeight(root);
+    }
+    else {
+        insert(root-&gt;right, x);
+        updateHeight(root);
+    }
+}
+void DFS(Node *root, bool &amp;isValid, bool preIsRed) {
+    if (isValid == false)
+        return;
+    if (root == NULL) {
+        return;
+    }
+    if (preIsRed) {
+        if (root-&gt;isBlack == false) {
+            isValid = false;
+            return;
+        }
+    }
+    if (root-&gt;isBlack == false) {
+        preIsRed = true;
+    }
+    else
+        preIsRed = false;
+    if (getBalanceFactor(root) != 0) {
+        isValid = false;
+        return;
+    }
+    DFS(root-&gt;left, isValid, preIsRed);
+    DFS(root-&gt;right, isValid, preIsRed);
+}
+int main() {
+    int k;
+    scanf(&quot;%d&quot;, &amp;k);
+    for (int i = 0; i&lt;k; i++) {
+        Node *root = NULL;
+        int n;
+        scanf(&quot;%d&quot;, &amp;n);
+        if (n != 1) {
+            bool isValid = true;
+            for (int j = 0; j&lt;n; j++) {
+                int x;
+                scanf(&quot;%d&quot;, &amp;x);
+                insert(root, x);
+            }
+            DFS(root, isValid, true);
+            if (isValid)
+                printf(&quot;Yes\n&quot;);
+            else
+                printf(&quot;No\n&quot;);
+        }
+        else {
+            int x;
+            scanf(&quot;%d&quot;, &amp;x);
+            if (x&gt;0)
+                printf(&quot;Yes\n&quot;);
+            else
+                printf(&quot;No\n&quot;);
+        }
+    }
+    return 0;
+}
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>如果您觉得我的文章对您有用，请随意打赏。<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -183,57 +657,117 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/09/17/2017年PAT春季考试/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/15/二分/" class="archive-article-date">
-  	<time datetime="2017-09-15T03:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/15/二分/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">二分</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/15/二分/">二分</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
+  <div id="SOHUCS" sid="2017年PAT春季考试" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "true"; 
+    var conf = "true"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -253,8 +787,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
