@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | LuoYupeng Blog</title>
+  <title>单例模式 | LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="LuoYupeng Blog">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="单例模式是一种对象创建型模式，使用单例模式，可以保证为一个类只生成唯一的实例对象。也就是说，在整个程序空间中，该类只存在一个实例对象。 其实，GoF对单例模式的定义是：保证一个类、只有一个实例存在，同时提供能对该实例加以访问的全局访问方法。  需求场景： - 线程池（threadpool），数据库连接，缓存（cache），对话框，日志对象，充当打印机、显卡等驱动程序的对象。  - 在程序空间使用全">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例模式">
+<meta property="og:url" content="http://yoursite.com/2017/09/25/单例模式/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
+<meta property="og:description" content="单例模式是一种对象创建型模式，使用单例模式，可以保证为一个类只生成唯一的实例对象。也就是说，在整个程序空间中，该类只存在一个实例对象。 其实，GoF对单例模式的定义是：保证一个类、只有一个实例存在，同时提供能对该实例加以访问的全局访问方法。  需求场景： - 线程池（threadpool），数据库连接，缓存（cache），对话框，日志对象，充当打印机、显卡等驱动程序的对象。  - 在程序空间使用全">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-24T16:33:35.737Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LuoYupeng Blog">
+<meta name="twitter:title" content="单例模式">
+<meta name="twitter:description" content="单例模式是一种对象创建型模式，使用单例模式，可以保证为一个类只生成唯一的实例对象。也就是说，在整个程序空间中，该类只存在一个实例对象。 其实，GoF对单例模式的定义是：保证一个类、只有一个实例存在，同时提供能对该实例加以访问的全局访问方法。  需求场景： - 线程池（threadpool），数据库连接，缓存（cache），对话框，日志对象，充当打印机、显卡等驱动程序的对象。  - 在程序空间使用全">
   
     <link rel="alternative" href="/atom.xml" title="LuoYupeng Blog" type="application/atom+xml">
   
@@ -138,36 +143,113 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-单例模式" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/25/单例模式/" class="archive-article-date">
-  	<time datetime="2017-09-25T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/25/单例模式/">单例模式</a>
+    <h1 class="article-title" itemprop="name">
+      单例模式
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/09/25/单例模式/" class="archive-article-date">
+  	<time datetime="2017-09-25T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>单例模式是一种对象创建型模式，使用单例模式，可以保证为<strong>一个类只生成唯一的实例对象</strong>。也就是说，在整个程序空间中，该类只存在一个实例对象。</p>
+<p>其实，GoF对单例模式的定义是：保证一个类、只有一个实例存在，同时提供能对该实例加以访问的全局访问方法。 </p>
+<p>需求场景：</p>
+<pre><code>- 线程池（threadpool），数据库连接，缓存（cache），对话框，日志对象，充当打印机、显卡等驱动程序的对象。
+
+- 在程序空间使用全局变量（全局变量需在程序开始创建对象，如果对象十分耗费资源，执行中没有使用到，导致资源浪费）
+
+- 大规模系统中，为了性能的考虑，需要节省对象的创建时间等等。
+</code></pre><p>单例模式在对象需要时才创建对象。</p>
+<p>单例模式实现：</p>
+<h3 id="1-懒汉式（延迟加载，时间换空间）"><a href="#1-懒汉式（延迟加载，时间换空间）" class="headerlink" title="1.懒汉式（延迟加载，时间换空间）"></a>1.懒汉式（延迟加载，时间换空间）</h3><pre><code>public class Singleton{
+    private static Singleton uniqueInstance;
+    //私有构造器
+    private Singleton(){}
+    //synchronized方法，解决多线程问题
+
+    public static synchronized Singleton getInstance(){
+        if(uniqueInstance == null){
+            uniqueInstance=new Singleton();
+        }
+        return uniqueInstance;
+    }
+}
+</code></pre><h3 id="2-饿汉式（空间换时间）"><a href="#2-饿汉式（空间换时间）" class="headerlink" title="2.饿汉式（空间换时间）"></a>2.饿汉式（空间换时间）</h3><pre><code>public class Singleton{
+    //在静态初始化器中创建单例，确保了线程安全
+    private static Singleton uniqueInstance=new Singleton();
+    //私有构造器
+    private Singleton(){}
+    public static Singleton getInstance(){
+        return uniqueInstance;
+    }
+}
+</code></pre><h3 id="3-双重检查加锁（double-checked-locking）"><a href="#3-双重检查加锁（double-checked-locking）" class="headerlink" title="3.双重检查加锁（double-checked locking）"></a>3.双重检查加锁（double-checked locking）</h3><p>在getInstance()中减少使用同步<br>先检查实例是否创建，如果尚未创建，才进行同步<br><strong>该方法大大减少了getInstance()的时间耗费。</strong></p>
+<pre><code>public class Singleton{
+    private volatile static Singleton uniqueInstance;
+
+    public static Singleton getInstance(){
+        if(uniqueInstance == null){
+            synchronized(Single.class){
+                //进入代码块再检测一次，如果仍然是null才创建实例
+                if(uniqueInstance == null){
+                    uniqueInstance = new Singleton();
+                }
+            }
+        }
+        return uniqueInstance;
+    }
+}
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>如果您觉得我的文章对您有用，请随意打赏。<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -179,99 +261,117 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/09/25/单例模式/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/17/2017年PAT春季考试/" class="archive-article-date">
-  	<time datetime="2017-09-17T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-17</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/17/2017年PAT春季考试/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2017年9月PAT-A考试</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/17/2017年PAT春季考试/">2017年9月PAT-A考试</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">算法题</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/15/二分/" class="archive-article-date">
-  	<time datetime="2017-09-15T03:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/15/二分/">二分</a>
-    </h1>
+  <div id="SOHUCS" sid="单例模式" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "true"; 
+    var conf = "true"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -291,8 +391,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
