@@ -169,46 +169,9 @@
 
 - 大规模系统中，为了性能的考虑，需要节省对象的创建时间等等。
 </code></pre><p>单例模式在对象需要时才创建对象。</p>
-<p>单例模式实现：</p>
-<h3 id="1-懒汉式（延迟加载，时间换空间）"><a href="#1-懒汉式（延迟加载，时间换空间）" class="headerlink" title="1.懒汉式（延迟加载，时间换空间）"></a>1.懒汉式（延迟加载，时间换空间）</h3><pre><code>public class Singleton{
-    private static Singleton uniqueInstance;
-    //私有构造器
-    private Singleton(){}
-    //synchronized方法，解决多线程问题
-
-    public static synchronized Singleton getInstance(){
-        if(uniqueInstance == null){
-            uniqueInstance=new Singleton();
-        }
-        return uniqueInstance;
-    }
-}
-</code></pre><h3 id="2-饿汉式（空间换时间）"><a href="#2-饿汉式（空间换时间）" class="headerlink" title="2.饿汉式（空间换时间）"></a>2.饿汉式（空间换时间）</h3><pre><code>public class Singleton{
-    //在静态初始化器中创建单例，确保了线程安全
-    private static Singleton uniqueInstance=new Singleton();
-    //私有构造器
-    private Singleton(){}
-    public static Singleton getInstance(){
-        return uniqueInstance;
-    }
-}
-</code></pre><h3 id="3-双重检查加锁（double-checked-locking）"><a href="#3-双重检查加锁（double-checked-locking）" class="headerlink" title="3.双重检查加锁（double-checked locking）"></a>3.双重检查加锁（double-checked locking）</h3><p>在getInstance()中减少使用同步<br>先检查实例是否创建，如果尚未创建，才进行同步<br><strong>该方法大大减少了getInstance()的时间耗费。</strong></p>
-<pre><code>public class Singleton{
-    private volatile static Singleton uniqueInstance;
-
-    public static Singleton getInstance(){
-        if(uniqueInstance == null){
-            synchronized(Single.class){
-                //进入代码块再检测一次，如果仍然是null才创建实例
-                if(uniqueInstance == null){
-                    uniqueInstance = new Singleton();
-                }
-            }
-        }
-        return uniqueInstance;
-    }
-}
-</code></pre>
+        
+          <a class="article-more-a" href="/2017/09/25/单例模式/#more">more >></a>
+        
       
 
       

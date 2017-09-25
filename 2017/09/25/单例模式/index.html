@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="LuoYupeng Blog">
 <meta property="og:description" content="单例模式是一种对象创建型模式，使用单例模式，可以保证为一个类只生成唯一的实例对象。也就是说，在整个程序空间中，该类只存在一个实例对象。 其实，GoF对单例模式的定义是：保证一个类、只有一个实例存在，同时提供能对该实例加以访问的全局访问方法。  需求场景： - 线程池（threadpool），数据库连接，缓存（cache），对话框，日志对象，充当打印机、显卡等驱动程序的对象。  - 在程序空间使用全">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-24T16:33:35.737Z">
+<meta property="og:updated_time" content="2017-09-24T16:35:37.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单例模式">
 <meta name="twitter:description" content="单例模式是一种对象创建型模式，使用单例模式，可以保证为一个类只生成唯一的实例对象。也就是说，在整个程序空间中，该类只存在一个实例对象。 其实，GoF对单例模式的定义是：保证一个类、只有一个实例存在，同时提供能对该实例加以访问的全局访问方法。  需求场景： - 线程池（threadpool），数据库连接，缓存（cache），对话框，日志对象，充当打印机、显卡等驱动程序的对象。  - 在程序空间使用全">
@@ -172,6 +172,7 @@
 
 - 大规模系统中，为了性能的考虑，需要节省对象的创建时间等等。
 </code></pre><p>单例模式在对象需要时才创建对象。</p>
+<a id="more"></a>
 <p>单例模式实现：</p>
 <h3 id="1-懒汉式（延迟加载，时间换空间）"><a href="#1-懒汉式（延迟加载，时间换空间）" class="headerlink" title="1.懒汉式（延迟加载，时间换空间）"></a>1.懒汉式（延迟加载，时间换空间）</h3><pre><code>public class Singleton{
     private static Singleton uniqueInstance;
