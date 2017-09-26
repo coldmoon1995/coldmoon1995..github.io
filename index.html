@@ -326,8 +326,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="二分查找（Binary-Search"><a href="#二分查找（Binary-Search" class="headerlink" title="二分查找（Binary Search)"></a>二分查找（Binary Search)</h3><p>序列为递增（递减写法相同，需改变判断条件）</p>
-<h4 id="1）在序列中查找元素为x的元素的位置，没找到返回-1"><a href="#1）在序列中查找元素为x的元素的位置，没找到返回-1" class="headerlink" title="1）在序列中查找元素为x的元素的位置，没找到返回-1"></a>1）在序列中查找元素为x的元素的位置，没找到返回-1</h4><p>代码：</p>
+        <h4 id="二分查找（Binary-Search"><a href="#二分查找（Binary-Search" class="headerlink" title="二分查找（Binary Search)"></a>二分查找（Binary Search)</h4><p>序列为递增（递减写法相同，需改变判断条件）</p>
+<h5 id="1）在序列中查找元素为x的元素的位置，没找到返回-1"><a href="#1）在序列中查找元素为x的元素的位置，没找到返回-1" class="headerlink" title="1）在序列中查找元素为x的元素的位置，没找到返回-1"></a>1）在序列中查找元素为x的元素的位置，没找到返回-1</h5><p>代码：</p>
 <pre><code>public int binarySearch(int x,int left,int right){
     while(left&lt;=right){
         int mid=left+(right-left)/2; //防止right+left超出int范围
