@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/images/jvm1-1.png">
 <meta property="og:image" content="http://yoursite.com/images/jvm1-2.jpg">
 <meta property="og:image" content="http://yoursite.com/images/jvm1-3.jpg">
-<meta property="og:updated_time" content="2017-10-05T09:26:28.532Z">
+<meta property="og:updated_time" content="2017-10-05T09:31:35.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java内存区域和内存溢出异常">
 <meta name="twitter:description" content="JDK：Java Development Kit，包括Java程序设计语言、Java虚拟机和Java API类库 JRE：Java Runtime Environment，包括JavaSE API子集和Java虚拟机 Java虚拟机运行时数据区：">
@@ -214,16 +214,16 @@ Java堆规整由采用垃圾收集器是否具有压缩功能决定，Serial，P
 - 另一部分是内存指针，即对象指向它的类元指针，虚拟机通过这个指针来确定这个对象是属于哪个类实例（但并不是所有虚拟机首先都必须在对象数据上保留类型指针，另外，如果对象是一个Java数组，那对象头必须还有一块记录数组长度的数据）
 </code></pre><p>实例数据是对象真正存储的有效信息。HotSpot分配策略为longs/doubles、ints、shorts/chars、bytes/boolean、oops，相同宽度的字段总是分配在一起。</p>
 <p>对象填充并不是必然存在，仅起占位符作用。（由于HotSpot VM自动内存管理要求对象起始地址为8倍数，对其填充起补全作用）</p>
-<h4 id="对象访问定位（Java程序需通过栈上的reference数据来操作具体对象）"><a href="#对象访问定位（Java程序需通过栈上的reference数据来操作具体对象）" class="headerlink" title="对象访问定位（Java程序需通过栈上的reference数据来操作具体对象）"></a>对象访问定位（Java程序需通过栈上的reference数据来操作具体对象）</h4><p>reference类型在JVM中只规定一个指向对象引用，引用通过何种方式去定位。访问堆中对象位置取决于虚拟机实现而定，主流方式使用句柄和直接指针两种。</p>
+<h4 id="对象访问定位-Java-程序需通过栈上的-reference-数据来操作具体对象"><a href="#对象访问定位-Java-程序需通过栈上的-reference-数据来操作具体对象" class="headerlink" title="对象访问定位(Java 程序需通过栈上的 reference 数据来操作具体对象)"></a>对象访问定位(Java 程序需通过栈上的 reference 数据来操作具体对象)</h4><p>reference类型在JVM中只规定一个指向对象引用，引用通过何种方式去定位。访问堆中对象位置取决于虚拟机实现而定，主流方式使用句柄和直接指针两种。</p>
 <p>（1）句柄访问 Java堆划分一块内存作为句柄池，reference存储对象句柄地址。句柄包含对象实例数据与类型数据各自的具体地址信息。<br><img src="/images/jvm1-2.jpg" alt=""></p>
 <p>（2）直接指针访问，reference存储的直接就是对象地址。<br><img src="/images/jvm1-3.jpg" alt=""></p>
 <p>句柄访问好处是reference存储的是稳定句柄地址，对象被移动时，只会改变句柄中实例数据指针，而reference本身不修改</p>
 <p>直接指针指针访问方式最大的好处是速度快，节省了一次指针定位时间开销。（Sun HotSpot采用直接指针）</p>
-<h4 id="Java堆溢出（java-lang-OutofMemoryError-Java-heap-space）"><a href="#Java堆溢出（java-lang-OutofMemoryError-Java-heap-space）" class="headerlink" title="Java堆溢出（java.lang.OutofMemoryError Java heap space）"></a>Java堆溢出（java.lang.OutofMemoryError Java heap space）</h4><p>重点分析内存中对象是否必要，即出现的是内存泄漏（Memory Leak）还是内存溢出（Memory Outflow）</p>
+<h4 id="Java堆溢出-java-lang-OutofMemoryError-Java-heap-space"><a href="#Java堆溢出-java-lang-OutofMemoryError-Java-heap-space" class="headerlink" title="Java堆溢出(java.lang.OutofMemoryError Java heap space)"></a>Java堆溢出(java.lang.OutofMemoryError Java heap space)</h4><p>重点分析内存中对象是否必要，即出现的是内存泄漏（Memory Leak）还是内存溢出（Memory Outflow）</p>
 <p>通过内存映像分析工具对Dump出来的堆转快照进行分析</p>
 <p>如果是内存泄漏，进一步查看泄漏对象到GC Roots的引用链。于是找到泄漏对象通过怎样的路径与GC Roots相关联，并导致垃圾收集器无法自动回收他们</p>
 <p>如果是内存溢出，应检查堆参数，从代码上检查是否存在某些对象生命周期过长，持有状态时间过长。</p>
-<h4 id="虚拟机栈和本地方法溢出（HotSpot不分虚拟机栈和本地方法栈）"><a href="#虚拟机栈和本地方法溢出（HotSpot不分虚拟机栈和本地方法栈）" class="headerlink" title="虚拟机栈和本地方法溢出（HotSpot不分虚拟机栈和本地方法栈）"></a>虚拟机栈和本地方法溢出（HotSpot不分虚拟机栈和本地方法栈）</h4><p>如果线程请求栈深度大于虚拟机允许最大深度，则抛出StackOverflowError异常</p>
+<h4 id="虚拟机栈和本地方法溢出-HotSpot不分虚拟机栈和本地方法栈"><a href="#虚拟机栈和本地方法溢出-HotSpot不分虚拟机栈和本地方法栈" class="headerlink" title="虚拟机栈和本地方法溢出(HotSpot不分虚拟机栈和本地方法栈)"></a>虚拟机栈和本地方法溢出(HotSpot不分虚拟机栈和本地方法栈)</h4><p>如果线程请求栈深度大于虚拟机允许最大深度，则抛出StackOverflowError异常</p>
 <p>如果虚拟机在扩展栈是无法申请到足够内存空间，则抛出OutofMemoryError异常</p>
 <p>单线程无论帧栈大小还是虚拟机容量太小，均抛出StackOverflowError异常</p>
 <p>在建立过多线程导致内存溢出，在不能减少线程数或跟换64位虚拟机情况下，只能通过减少最大堆和减少栈容量来换取跟多的线程</p>
@@ -474,14 +474,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">算法题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
@@ -490,11 +482,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">算法题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
             
             <div class="clearfix"></div>
