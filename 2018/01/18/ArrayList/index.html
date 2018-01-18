@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>ArrayList | LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="####创建：ArrayList()        private static final int DEFAULT_CAPACITY = 10;        public ArrayList(int initialCapacity) {                if (initialCapacity &amp;gt; 0) {                    this.elementDat">
+  <meta name="description" content="创建：ArrayList()private static final int DEFAULT_CAPACITY = 10; public ArrayList(int initialCapacity) {         if (initialCapacity &amp;gt; 0) {             this.elementData = new Object[initialCapacity];">
 <meta name="keywords" content="JDK源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ArrayList">
 <meta property="og:url" content="http://yoursite.com/2018/01/18/ArrayList/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
-<meta property="og:description" content="####创建：ArrayList()        private static final int DEFAULT_CAPACITY = 10;        public ArrayList(int initialCapacity) {                if (initialCapacity &amp;gt; 0) {                    this.elementDat">
+<meta property="og:description" content="创建：ArrayList()private static final int DEFAULT_CAPACITY = 10; public ArrayList(int initialCapacity) {         if (initialCapacity &amp;gt; 0) {             this.elementData = new Object[initialCapacity];">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-18T08:29:13.825Z">
+<meta property="og:updated_time" content="2018-01-18T08:39:19.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList">
-<meta name="twitter:description" content="####创建：ArrayList()        private static final int DEFAULT_CAPACITY = 10;        public ArrayList(int initialCapacity) {                if (initialCapacity &amp;gt; 0) {                    this.elementDat">
+<meta name="twitter:description" content="创建：ArrayList()private static final int DEFAULT_CAPACITY = 10; public ArrayList(int initialCapacity) {         if (initialCapacity &amp;gt; 0) {             this.elementData = new Object[initialCapacity];">
   
     <link rel="alternative" href="/atom.xml" title="LuoYupeng Blog" type="application/atom+xml">
   
@@ -163,16 +163,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>####创建：ArrayList()<br>        private static final int DEFAULT_CAPACITY = 10;<br>        public ArrayList(int initialCapacity) {<br>                if (initialCapacity &gt; 0) {<br>                    this.elementData = new Object[initialCapacity];<br>                } else if (initialCapacity == 0) {<br>                    this.elementData = EMPTY_ELEMENTDATA;<br>                } else {<br>                    throw new IllegalArgumentException(“Illegal Capacity: “+<br>                                                       initialCapacity);<br>                }<br>            }</p>
-<pre><code>/**
- * Constructs an empty list with an initial capacity of ten.
- */
-public ArrayList() {
-    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
-}
+        <h4 id="创建：ArrayList"><a href="#创建：ArrayList" class="headerlink" title="创建：ArrayList()"></a>创建：ArrayList()</h4><pre><code>private static final int DEFAULT_CAPACITY = 10;
+public ArrayList(int initialCapacity) {
+        if (initialCapacity &gt; 0) {
+            this.elementData = new Object[initialCapacity];
+        } else if (initialCapacity == 0) {
+            this.elementData = EMPTY_ELEMENTDATA;
+        } else {
+            throw new IllegalArgumentException(&quot;Illegal Capacity: &quot;+
+                                               initialCapacity);
+        }
+    }
+
+    /**
+     * Constructs an empty list with an initial capacity of ten.
+     */
+    public ArrayList() {
+        this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+    }
 </code></pre><p>ArrayList是采用数组方式存放对象，默认数组大小为10。</p>
-<p>####插入对象：add(E)</p>
-<pre><code>public boolean add(E e) {
+<a id="more"></a>
+<h4 id="插入对象：add-E"><a href="#插入对象：add-E" class="headerlink" title="插入对象：add(E)"></a>插入对象：add(E)</h4><pre><code>public boolean add(E e) {
         ensureCapacityInternal(size + 1);  // Increments modCount!!
         elementData[size++] = e;
         return true;
@@ -198,8 +209,7 @@ private void grow(int minCapacity) {
 </code></pre><p>当调用add方法时，首先基于ArrayList中已有元素数量+1，产生一个minCapacity的变量，然后比较该变量和Object数组大小</p>
 <p>如果大于Object数组值，则将当前Object数组值赋给一个数组对象，接着产生一个新的数组容量值。</p>
 <p>计算方法：当前数组值*1.5+1，如果得出的容量值仍然小于minCapacity，那么就以minCapacity最为新的容量值，调用Arrays.copyOf来生成新的数组对象。</p>
-<p>####删除对象：remove(E)</p>
-<pre><code>public boolean remove(Object o) {
+<h4 id="删除对象：remove-E"><a href="#删除对象：remove-E" class="headerlink" title="删除对象：remove(E)"></a>删除对象：remove(E)</h4><pre><code>public boolean remove(Object o) {
         if (o == null) {
             for (int index = 0; index &lt; size; index++)
                 if (elementData[index] == null) {
@@ -233,15 +243,13 @@ public E remove(int index) {
 </code></pre><p>首先判断对象是否为null，如为null，则遍历数组中已有元素，比较是否为null</p>
 <p>如为null则调用fastRemove删除相应位置的对象</p>
 <p>若不是null，唯一不同是调用E的equal方法比较元素值是否相同</p>
-<p>####获取单个对象：get(int)</p>
-<pre><code>public E get(int index) {
+<h4 id="获取单个对象：get-int"><a href="#获取单个对象：get-int" class="headerlink" title="获取单个对象：get(int)"></a>获取单个对象：get(int)</h4><pre><code>public E get(int index) {
             rangeCheck(index);
             checkForComodification();
             return ArrayList.this.elementData(offset + index);
         }
 </code></pre><p>仅先做范围检测，即可返回此位置的对象。</p>
-<p>####遍历对象：iterator()</p>
-
+<h4 id="遍历对象：iterator"><a href="#遍历对象：iterator" class="headerlink" title="遍历对象：iterator()"></a>遍历对象：iterator()</h4>
       
 
       
@@ -483,11 +491,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java并发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color1">JDK源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -507,15 +511,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JDK源码</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java并发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
               </li>
             
             <div class="clearfix"></div>
