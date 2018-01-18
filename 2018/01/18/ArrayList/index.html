@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="LuoYupeng Blog">
 <meta property="og:description" content="创建：ArrayList()private static final int DEFAULT_CAPACITY = 10; public ArrayList(int initialCapacity) {         if (initialCapacity &amp;gt; 0) {             this.elementData = new Object[initialCapacity];">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-18T08:39:19.453Z">
+<meta property="og:updated_time" content="2018-01-18T09:03:56.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList">
 <meta name="twitter:description" content="创建：ArrayList()private static final int DEFAULT_CAPACITY = 10; public ArrayList(int initialCapacity) {         if (initialCapacity &amp;gt; 0) {             this.elementData = new Object[initialCapacity];">
@@ -249,7 +249,18 @@ public E remove(int index) {
             return ArrayList.this.elementData(offset + index);
         }
 </code></pre><p>仅先做范围检测，即可返回此位置的对象。</p>
-<h4 id="遍历对象：iterator"><a href="#遍历对象：iterator" class="headerlink" title="遍历对象：iterator()"></a>遍历对象：iterator()</h4>
+<h4 id="遍历对象：iterator"><a href="#遍历对象：iterator" class="headerlink" title="遍历对象：iterator()"></a>遍历对象：iterator()</h4><p>iterator是由ArrayList的父类AbstractList实现，每次调用iterator时，都会创建一个AbstractList内部类Itr的实例。</p>
+<p>当调用实例的hasNext方法，判断当前指向数组的位置是否和数组中已有元素的大小相等，相等返回true否则false</p>
+<p>当调用next方法时，首先比较在此Iterator时获取的modCount与目前的modCount，如果两个modCount不相等，则说明在获取next元素时，发生了对集合大小产生影响（新增、删除）动作，此时抛出ConcurrentModificationException。</p>
+<p>如果modCount相等，则调用get方法来获取相应位置的元素，如果get不到，在IndexOutOfBoundsException异常后，检测modCount，如相等，则抛出NoSuchElementException，如不相等，则抛出ConcurrentModificationException。</p>
+<h4 id="判断对象是否存在：contains-E"><a href="#判断对象是否存在：contains-E" class="headerlink" title="判断对象是否存在：contains(E)"></a>判断对象是否存在：contains(E)</h4><p>遍历整个ArrayList，如E为null，则直接判断是否有null元素</p>
+<p>如E不为null，则通过E.equals方法判断是否存在</p>
+<h3 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h3><pre><code>i. ArrayList基于数组方式实现，无容量限制
+
+ii. ArrayList在执行插入操作是可能要扩容，在删除元素时，并不会减少数组的容量（如果希望相应缩小数组容量，可以调用ArrayList的trimToSize()），在查找元素时要遍历数组，对于非null元素，采用equals方式寻找。
+
+iii. ArrayList是非线程安全的
+</code></pre>
       
 
       
@@ -491,15 +502,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JDK源码</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">算法题</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">JDK源码</a>
               </li>
              
               <li class="article-tag-list-item">
