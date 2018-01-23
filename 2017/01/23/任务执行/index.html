@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017/9 | LuoYupeng Blog</title>
+  <title>任务执行 | LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="LuoYupeng Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2017/09/index.html">
+  <meta name="description" content="在理想的情况下，各个任务之间是相互独立的：任务并不依赖于其他任务的状态、结果或边界效应。 显示为任务创建线程class ThreadPerTaskWebServer{     public static void main(String[] args){         ServerSocket socket = new ServerSocket(80);         while(true){">
+<meta name="keywords" content="Java并发,多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="任务执行">
+<meta property="og:url" content="http://yoursite.com/2017/01/23/任务执行/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
+<meta property="og:description" content="在理想的情况下，各个任务之间是相互独立的：任务并不依赖于其他任务的状态、结果或边界效应。 显示为任务创建线程class ThreadPerTaskWebServer{     public static void main(String[] args){         ServerSocket socket = new ServerSocket(80);         while(true){">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-23T08:01:21.212Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LuoYupeng Blog">
+<meta name="twitter:title" content="任务执行">
+<meta name="twitter:description" content="在理想的情况下，各个任务之间是相互独立的：任务并不依赖于其他任务的状态、结果或边界效应。 显示为任务创建线程class ThreadPerTaskWebServer{     public static void main(String[] args){         ServerSocket socket = new ServerSocket(80);         while(true){">
   
     <link rel="alternative" href="/atom.xml" title="LuoYupeng Blog" type="application/atom+xml">
   
@@ -138,178 +143,258 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-任务执行" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      任务执行
+    </h1>
+  
+
+        
+        <a href="/2017/01/23/任务执行/" class="archive-article-date">
+  	<time datetime="2017-01-23T02:45:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-23</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在理想的情况下，各个任务之间是相互独立的：任务并不依赖于其他任务的状态、结果或边界效应。</p>
+<h4 id="显示为任务创建线程"><a href="#显示为任务创建线程" class="headerlink" title="显示为任务创建线程"></a>显示为任务创建线程</h4><pre><code>class ThreadPerTaskWebServer{
+    public static void main(String[] args){
+        ServerSocket socket = new ServerSocket(80);
+        while(true){
+            final Socket connection = socket.accept();
+            Runnable task = new Runnable(){
+                public void run(){
+                    handleRequest(connection);
+                }
+            };
+            new Thread(task).start();
+        }
+    }
+}
+</code></pre><h4 id="无限制创造线程的不足："><a href="#无限制创造线程的不足：" class="headerlink" title="无限制创造线程的不足："></a>无限制创造线程的不足：</h4><pre><code>a. 线程生命周期的开销非常高。线程创建和销毁有代价，线程的创建都需要时间
+b. 资源消耗。活跃的线程会消耗系统资源，尤其是内存。如果可运行的线程数量多于可用处理器的数量，那么有些线程将被闲置。
+c. 稳定性。在可创建线程的数量上存在一个限制。
+</code></pre><a id="more"></a>
+<h4 id="Executor框架"><a href="#Executor框架" class="headerlink" title="Executor框架"></a>Executor框架</h4><p>任务是一组逻辑工作单元，而线程则是使任务异步执行的机制。</p>
+<p>在Java类库中，任务执行的主要抽象不是Thread，而是Executor。</p>
+<p>Executor接口：</p>
+<pre><code>public interface Executor{
+    void execute(Runnable command);
+}
+</code></pre><p>它提供一种标准方法将任务的提交过程与执行过程解耦开，并用Runnable表示任务。</p>
+<p>Executor基于生产者-消费者模式，提交任务的操作相当于生产者，执行任务的线程相当于消费者。</p>
+<pre><code>class ThreadPerTaskWebServer{
+    private static final Executor exec=Executors.newFixedThreadPool(100);
+    public static void main(String[] args){
+        ServerSocket socket = new ServerSocket(80);
+        while(true){
+            final Socket connection = socket.accept();
+            Runnable task = new Runnable(){
+                public void run(){
+                    handleRequest(connection);
+                }
+            };
+            //new Thread(task).start();
+            exec.execute(task);
+        }
+    }
+}
+</code></pre><p>每当看到 newThread（runnable）.start()时，考虑使用Executor来代替Thread</p>
+<h4 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h4><p>线程池：管理一组同构工作线程的资源池。线程池是与工作队列（work queue）密切相关，在工作队列中保存所有等待执行的任务，执行任务，然后返回线程池等待下一任务。</p>
+<p>通过适当调整线程池的大小，可以创建足够多的线程是处理器保持忙碌状态，同时还可以防止过多线程相互竞争资源而使应用程序耗尽内存或失败。</p>
+<p>可以通过Executors中的静态工厂方法来创建线程池：</p>
+<pre><code>a. newFixedThreadPool。newFixedThreadPool将创建一个固定长度的线程池，每当提交一个任务时就创建一个线程，直到达到线程池的最大数量，这时线程池的规模不再变化
+b. newCachedThreadPool。创建一个可缓存线程池，若线程池当前规模超过处理需求时，将回收空闲线程，当需求增加时，则可添加新线程，线程池规模无限制
+c. newSingleThreadExecutor。单线程Executor，创建单工作者线程执行任务，如果这个线程异常结束，会创建另一个线程替代
+d. newScheduleThreadPool。创建一个固定长度的线程池，而且以延时或定时方式执行任务
+</code></pre><h4 id="Executor生命周期"><a href="#Executor生命周期" class="headerlink" title="Executor生命周期"></a>Executor生命周期</h4><p>由于Executor以异步方式执行任务，因此有些任务可能已经完成，有的可能正在运行，而其他任务可能正在等待执行。</p>
+<p>为了解决Executor生命周期问题，Executor扩展了ExecutorService接口，添加了一些运用于生命周期管理的方法。</p>
+<pre><code>public interface ExecutorService extends Executor{
+    void shutdown();
+    List&lt;Runnable&gt; isShutdownNow();
+    boolean isShutdown();
+    boolean isTerminated();
+    boolean awaitTermination(long timeout,TimeUnit unit) throws InterruptedExeption;
+}
+</code></pre><p>ExecutorService生命周期有三种状态：运行，关闭和已终止</p>
+<p>ExecutorService在初始化创建时处于运行状态，shutdown方法经执行平缓关闭过程（不再接受新任务，等待已经提交执行任务完成）。</p>
+<p>shutdownNow将执行粗暴的关闭过程，尝试取消所有运行的任务，并且不再启动队列中尚未开始执行的任务。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>如果您觉得我的文章对您有用，请随意打赏。<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/25/单例模式/" class="archive-article-date">
-  	<time datetime="2017-09-25T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/25/单例模式/">单例模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/24/设计模式总结/" class="archive-article-date">
-  	<time datetime="2017-09-24T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/24/设计模式总结/">设计模式总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/17/2017年PAT春季考试/" class="archive-article-date">
-  	<time datetime="2017-09-17T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/17/2017年PAT春季考试/">2017年9月PAT-A考试</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">算法题</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java并发</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/01/23/任务执行/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/15/二分/" class="archive-article-date">
-  	<time datetime="2017-09-15T03:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2017/09/15/二分/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          二分
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/15/二分/">二分</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
+  <div id="SOHUCS" sid="任务执行" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "true"; 
+    var conf = "true"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -329,8 +414,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
