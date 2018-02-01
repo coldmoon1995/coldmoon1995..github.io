@@ -140,6 +140,108 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-避免活跃性危险" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/避免活跃性危险/">避免活跃性危险</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/01/避免活跃性危险/" class="archive-article-date">
+  	<time datetime="2018-02-01T02:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="死锁（Deadlock）"><a href="#死锁（Deadlock）" class="headerlink" title="死锁（Deadlock）"></a>死锁（Deadlock）</h4><p>最简单的死锁形式：线程A持有锁L并想获得锁M的同时，线程B持有锁M并尝试获得锁L,那么这两个线程将永远等待下去。</p>
+<p>（1）锁顺序死锁（两个线程试图以不同顺序获得相同的锁）</p>
+<pre><code>A-&gt;持有锁left-&gt;尝试锁住right-&gt;永久等待
+B-&gt;持有锁right-&gt;尝试锁住left-&gt;永久等待
+
+如果所有线程都以固定顺序来获得锁，便不会出现锁顺序死锁问题。
+</code></pre><p>（2）动态的锁顺序死锁</p>
+<pre><code>资金从A账户转入B账户，在转账前要获得A、B两个账户的对象锁，以确保以原子方式更新
+若此时B账户转入A，则获得B、A锁，会产生死锁。
+
+只要对锁对象排序，使获取锁顺序固定即可避免。
+</code></pre><p>（3）在协作对象之间发生死锁</p>
+<pre><code>在持有锁时调用某个外部方法，这个外部方法可能会获得其他锁，这可能会产生死锁。
+开放调用：在调用某个方法时，不需要持有锁，这种方法称为开放调用（Open Call）
+
+依赖于开放调用可解决这类死锁问题，但会失去原子性，要通过其他方式实现原子性。
+</code></pre><p>（4）资源死锁（多个线程在相同资源集合上等待时，发生死锁）</p>
+<pre><code>线程A-&gt;持有与数据库left连接-&gt;请求与数据库right连接
+线程B-&gt;持有与数据库right连接-&gt;请求与数据库left连接
+
+基于资源死锁的另一种形式：线程饥饿死锁
+    如：一个任务提交另一个任务，并等待被提交任务在单线程Executor中执行完成
+</code></pre>
+        
+          <a class="article-more-a" href="/2018/02/01/避免活跃性危险/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java并发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/01/避免活跃性危险/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-任务执行" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -995,11 +1097,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java并发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">JDK源码</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1011,15 +1117,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JDK源码</a>
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java并发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">

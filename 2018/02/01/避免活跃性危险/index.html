@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: JDK源码 | LuoYupeng Blog</title>
+  <title>避免活跃性危险 | LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="LuoYupeng Blog">
-<meta property="og:url" content="http://yoursite.com/tags/JDK源码/index.html">
+  <meta name="description" content="死锁（Deadlock）最简单的死锁形式：线程A持有锁L并想获得锁M的同时，线程B持有锁M并尝试获得锁L,那么这两个线程将永远等待下去。 （1）锁顺序死锁（两个线程试图以不同顺序获得相同的锁） A-&amp;gt;持有锁left-&amp;gt;尝试锁住right-&amp;gt;永久等待 B-&amp;gt;持有锁right-&amp;gt;尝试锁住left-&amp;gt;永久等待  如果所有线程都以固定顺序来获得锁，便不会出现锁顺序死锁问">
+<meta name="keywords" content="Java并发,多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="避免活跃性危险">
+<meta property="og:url" content="http://yoursite.com/2018/02/01/避免活跃性危险/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
+<meta property="og:description" content="死锁（Deadlock）最简单的死锁形式：线程A持有锁L并想获得锁M的同时，线程B持有锁M并尝试获得锁L,那么这两个线程将永远等待下去。 （1）锁顺序死锁（两个线程试图以不同顺序获得相同的锁） A-&amp;gt;持有锁left-&amp;gt;尝试锁住right-&amp;gt;永久等待 B-&amp;gt;持有锁right-&amp;gt;尝试锁住left-&amp;gt;永久等待  如果所有线程都以固定顺序来获得锁，便不会出现锁顺序死锁问">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-01T09:11:49.653Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LuoYupeng Blog">
+<meta name="twitter:title" content="避免活跃性危险">
+<meta name="twitter:description" content="死锁（Deadlock）最简单的死锁形式：线程A持有锁L并想获得锁M的同时，线程B持有锁M并尝试获得锁L,那么这两个线程将永远等待下去。 （1）锁顺序死锁（两个线程试图以不同顺序获得相同的锁） A-&amp;gt;持有锁left-&amp;gt;尝试锁住right-&amp;gt;永久等待 B-&amp;gt;持有锁right-&amp;gt;尝试锁住left-&amp;gt;永久等待  如果所有线程都以固定顺序来获得锁，便不会出现锁顺序死锁问">
   
     <link rel="alternative" href="/atom.xml" title="LuoYupeng Blog" type="application/atom+xml">
   
@@ -138,60 +143,228 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-避免活跃性危险" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/18/ArrayList/" class="archive-article-date">
-  	<time datetime="2018-01-18T08:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/18/ArrayList/">ArrayList</a>
+    <h1 class="article-title" itemprop="name">
+      避免活跃性危险
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/02/01/避免活跃性危险/" class="archive-article-date">
+  	<time datetime="2018-02-01T02:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="死锁（Deadlock）"><a href="#死锁（Deadlock）" class="headerlink" title="死锁（Deadlock）"></a>死锁（Deadlock）</h4><p>最简单的死锁形式：线程A持有锁L并想获得锁M的同时，线程B持有锁M并尝试获得锁L,那么这两个线程将永远等待下去。</p>
+<p>（1）锁顺序死锁（两个线程试图以不同顺序获得相同的锁）</p>
+<pre><code>A-&gt;持有锁left-&gt;尝试锁住right-&gt;永久等待
+B-&gt;持有锁right-&gt;尝试锁住left-&gt;永久等待
+
+如果所有线程都以固定顺序来获得锁，便不会出现锁顺序死锁问题。
+</code></pre><p>（2）动态的锁顺序死锁</p>
+<pre><code>资金从A账户转入B账户，在转账前要获得A、B两个账户的对象锁，以确保以原子方式更新
+若此时B账户转入A，则获得B、A锁，会产生死锁。
+
+只要对锁对象排序，使获取锁顺序固定即可避免。
+</code></pre><p>（3）在协作对象之间发生死锁</p>
+<pre><code>在持有锁时调用某个外部方法，这个外部方法可能会获得其他锁，这可能会产生死锁。
+开放调用：在调用某个方法时，不需要持有锁，这种方法称为开放调用（Open Call）
+
+依赖于开放调用可解决这类死锁问题，但会失去原子性，要通过其他方式实现原子性。
+</code></pre><p>（4）资源死锁（多个线程在相同资源集合上等待时，发生死锁）</p>
+<pre><code>线程A-&gt;持有与数据库left连接-&gt;请求与数据库right连接
+线程B-&gt;持有与数据库right连接-&gt;请求与数据库left连接
+
+基于资源死锁的另一种形式：线程饥饿死锁
+    如：一个任务提交另一个任务，并等待被提交任务在单线程Executor中执行完成
+</code></pre><a id="more"></a>
+<h5 id="死锁避免与诊断"><a href="#死锁避免与诊断" class="headerlink" title="死锁避免与诊断"></a>死锁避免与诊断</h5><p>（1）支持定时的锁</p>
+<pre><code>显示使用Lock类中定时tryLock 功能代替内置锁机制
+    -&gt;指定一个超时时限（Timeout），锁超时，即可以释放这个锁
+</code></pre><p>（2）通过线程转储信息来分析死锁</p>
+<pre><code>JVM通过线程转储信息识别死锁发生
+    -&gt;每个线程持有哪些锁，在哪些栈帧中获得这些锁，以及被阻塞线程正在获取哪些锁。
+</code></pre><h4 id="其他活跃性危险（饥饿，丢失信号和活锁）"><a href="#其他活跃性危险（饥饿，丢失信号和活锁）" class="headerlink" title="其他活跃性危险（饥饿，丢失信号和活锁）"></a>其他活跃性危险（饥饿，丢失信号和活锁）</h4><h5 id="饥饿（当线程无法访问它所需资源而不能执行下去）"><a href="#饥饿（当线程无法访问它所需资源而不能执行下去）" class="headerlink" title="饥饿（当线程无法访问它所需资源而不能执行下去）"></a>饥饿（当线程无法访问它所需资源而不能执行下去）</h5><p>引发饥饿最常见资源为CPU周期</p>
+<p>如果Java应用程序对线程优先级使用不当，或持有锁在执行一些无法结束的结构（如无限循环，或无限等待某个资源），那么可能导致饥饿，因为其他需要这个锁线程无法得到它。</p>
+<p>要避免使用线程优先级，这会增加平台依赖性和活跃性问题。</p>
+<h5 id="糟糕的响应性"><a href="#糟糕的响应性" class="headerlink" title="糟糕的响应性"></a>糟糕的响应性</h5><p>如果某个线程长时间的占用一个锁，其他访问这个容器线程要等待长时间</p>
+<h5 id="活锁（LiveLock）"><a href="#活锁（LiveLock）" class="headerlink" title="活锁（LiveLock）"></a>活锁（LiveLock）</h5><p>活锁不会引起阻塞线程，但也不能继续执行，因为线程不断执行相同操作，且总会失败。</p>
+<p>活锁通常发生在处理事务消息应用程序中，如果不能成功处理某消息。消息处理机制回滚整个事务，并将它重新放在事务开头。反复调用，返回相同的结果。</p>
+<p>当多个相互协作线程对彼此进行响应，从而修改各自状态，并使其他任何一个线程都无法执行下去，就发生活锁。</p>
+<p>解决活锁问题，需在重试机制中引入随机性。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>如果您觉得我的文章对您有用，请随意打赏。<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JDK源码</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java并发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/01/避免活跃性危险/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/01/23/任务执行/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">任务执行</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+  <div id="SOHUCS" sid="避免活跃性危险" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "true"; 
+    var conf = "true"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -211,9 +384,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
