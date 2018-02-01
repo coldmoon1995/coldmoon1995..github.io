@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="LuoYupeng Blog">
 <meta property="og:description" content="死锁（Deadlock）最简单的死锁形式：线程A持有锁L并想获得锁M的同时，线程B持有锁M并尝试获得锁L,那么这两个线程将永远等待下去。 （1）锁顺序死锁（两个线程试图以不同顺序获得相同的锁） A-&amp;gt;持有锁left-&amp;gt;尝试锁住right-&amp;gt;永久等待 B-&amp;gt;持有锁right-&amp;gt;尝试锁住left-&amp;gt;永久等待  如果所有线程都以固定顺序来获得锁，便不会出现锁顺序死锁问">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-01T09:11:49.653Z">
+<meta property="og:updated_time" content="2018-02-01T09:13:35.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="避免活跃性危险">
 <meta name="twitter:description" content="死锁（Deadlock）最简单的死锁形式：线程A持有锁L并想获得锁M的同时，线程B持有锁M并尝试获得锁L,那么这两个线程将永远等待下去。 （1）锁顺序死锁（两个线程试图以不同顺序获得相同的锁） A-&amp;gt;持有锁left-&amp;gt;尝试锁住right-&amp;gt;永久等待 B-&amp;gt;持有锁right-&amp;gt;尝试锁住left-&amp;gt;永久等待  如果所有线程都以固定顺序来获得锁，便不会出现锁顺序死锁问">
@@ -174,7 +174,8 @@ B-&gt;持有锁right-&gt;尝试锁住left-&gt;永久等待
 若此时B账户转入A，则获得B、A锁，会产生死锁。
 
 只要对锁对象排序，使获取锁顺序固定即可避免。
-</code></pre><p>（3）在协作对象之间发生死锁</p>
+</code></pre><a id="more"></a>
+<p>（3）在协作对象之间发生死锁</p>
 <pre><code>在持有锁时调用某个外部方法，这个外部方法可能会获得其他锁，这可能会产生死锁。
 开放调用：在调用某个方法时，不需要持有锁，这种方法称为开放调用（Open Call）
 
@@ -185,8 +186,7 @@ B-&gt;持有锁right-&gt;尝试锁住left-&gt;永久等待
 
 基于资源死锁的另一种形式：线程饥饿死锁
     如：一个任务提交另一个任务，并等待被提交任务在单线程Executor中执行完成
-</code></pre><a id="more"></a>
-<h5 id="死锁避免与诊断"><a href="#死锁避免与诊断" class="headerlink" title="死锁避免与诊断"></a>死锁避免与诊断</h5><p>（1）支持定时的锁</p>
+</code></pre><h5 id="死锁避免与诊断"><a href="#死锁避免与诊断" class="headerlink" title="死锁避免与诊断"></a>死锁避免与诊断</h5><p>（1）支持定时的锁</p>
 <pre><code>显示使用Lock类中定时tryLock 功能代替内置锁机制
     -&gt;指定一个超时时限（Timeout），锁超时，即可以释放这个锁
 </code></pre><p>（2）通过线程转储信息来分析死锁</p>
@@ -446,14 +446,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java并发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">JDK源码</a>
               </li>
              
@@ -475,6 +467,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
