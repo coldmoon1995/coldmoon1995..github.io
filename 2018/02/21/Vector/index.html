@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>LinkedList | LuoYupeng Blog</title>
+  <title>Vector | LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="LinkedList基于双向链表机制（即集合每个元素都知道其前一个元素和后一个元素） LinkedList定义：package java.util; public class LinkedList&amp;lt;E&amp;gt; extends AbstractSequentialList&amp;lt;E&amp;gt;     implements List&amp;lt;E&amp;gt;, Deque&amp;lt;E&amp;gt;, Clonea">
+  <meta name="description" content="Vector和ArrayList一样是基于Object数组方式实现的。 Vector() public Vector(int initialCapacity, int capacityIncrement) {         super();         if (initialCapacity &amp;lt; 0)             throw new IllegalArgumentExcep">
 <meta name="keywords" content="JDK源码,Java集合容器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LinkedList">
-<meta property="og:url" content="http://yoursite.com/2018/02/21/LinkedList/index.html">
+<meta property="og:title" content="Vector">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/Vector/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
-<meta property="og:description" content="LinkedList基于双向链表机制（即集合每个元素都知道其前一个元素和后一个元素） LinkedList定义：package java.util; public class LinkedList&amp;lt;E&amp;gt; extends AbstractSequentialList&amp;lt;E&amp;gt;     implements List&amp;lt;E&amp;gt;, Deque&amp;lt;E&amp;gt;, Clonea">
+<meta property="og:description" content="Vector和ArrayList一样是基于Object数组方式实现的。 Vector() public Vector(int initialCapacity, int capacityIncrement) {         super();         if (initialCapacity &amp;lt; 0)             throw new IllegalArgumentExcep">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-21T14:40:27.968Z">
+<meta property="og:updated_time" content="2018-02-21T15:08:19.504Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LinkedList">
-<meta name="twitter:description" content="LinkedList基于双向链表机制（即集合每个元素都知道其前一个元素和后一个元素） LinkedList定义：package java.util; public class LinkedList&amp;lt;E&amp;gt; extends AbstractSequentialList&amp;lt;E&amp;gt;     implements List&amp;lt;E&amp;gt;, Deque&amp;lt;E&amp;gt;, Clonea">
+<meta name="twitter:title" content="Vector">
+<meta name="twitter:description" content="Vector和ArrayList一样是基于Object数组方式实现的。 Vector() public Vector(int initialCapacity, int capacityIncrement) {         super();         if (initialCapacity &amp;lt; 0)             throw new IllegalArgumentExcep">
   
     <link rel="alternative" href="/atom.xml" title="LuoYupeng Blog" type="application/atom+xml">
   
@@ -143,131 +143,54 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-LinkedList" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Vector" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      LinkedList
+      Vector
     </h1>
   
 
         
-        <a href="/2018/02/21/LinkedList/" class="archive-article-date">
-  	<time datetime="2018-02-21T14:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-21</time>
+        <a href="/2018/02/21/Vector/" class="archive-article-date">
+  	<time datetime="2018-02-21T15:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>LinkedList基于双向链表机制（即集合每个元素都知道其前一个元素和后一个元素）</strong></p>
-<h4 id="LinkedList定义："><a href="#LinkedList定义：" class="headerlink" title="LinkedList定义："></a>LinkedList定义：</h4><pre><code>package java.util;
-public class LinkedList&lt;E&gt; extends AbstractSequentialList&lt;E&gt;
-    implements List&lt;E&gt;, Deque&lt;E&gt;, Cloneable, java.io.Serializable{
-    transient int size = 0;
-    transient Node&lt;E&gt; first;
-    transient Node&lt;E&gt; last;
-}
-</code></pre><p>LinkedList中以内部的Node类来代替集合中的元素</p>
-<a id="more"></a>
-<pre><code>private static class Node&lt;E&gt; {
-        E item;
-        Node&lt;E&gt; next;
-        Node&lt;E&gt; prev;
-        Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) {
-            this.item = element;
-            this.next = next;
-            this.prev = prev;
-        }
+        <p><strong>Vector和ArrayList一样是基于Object数组方式实现的。</strong></p>
+<h3 id="Vector"><a href="#Vector" class="headerlink" title="Vector()"></a>Vector()</h3><pre><code> public Vector(int initialCapacity, int capacityIncrement) {
+        super();
+        if (initialCapacity &lt; 0)
+            throw new IllegalArgumentException(&quot;Illegal Capacity: &quot;+
+                                               initialCapacity);
+        this.elementData = new Object[initialCapacity];
+        this.capacityIncrement = capacityIncrement;
     }
-</code></pre><h4 id="add-E"><a href="#add-E" class="headerlink" title="add(E)"></a>add(E)</h4><p>链表无容量限制，但双向链表本身使用了更多空间，也需要额外的链表指针操作。 </p>
-<pre><code>public boolean add(E e) {
-        linkLast(e);
+public Vector() {
+        this(10);
+    }
+</code></pre><p>默认创建大小为10 的Object数组，并将capacityIncrement设置为0</p>
+<a id="more"></a>
+<h3 id="add-E"><a href="#add-E" class="headerlink" title="add(E)"></a>add(E)</h3><pre><code>public synchronized boolean add(E e) {
+        modCount++;
+        ensureCapacityHelper(elementCount + 1);
+        elementData[elementCount++] = e;
         return true;
     }
-void linkLast(E e) {
-        final Node&lt;E&gt; l = last;
-        final Node&lt;E&gt; newNode = new Node&lt;&gt;(l, e, null);
-        last = newNode;
-        if (l == null)
-            first = newNode;
-        else
-            l.next = newNode;
-        size++;
-        modCount++;
-    }
-</code></pre><h4 id="remove-E"><a href="#remove-E" class="headerlink" title="remove(E)"></a>remove(E)</h4><pre><code>public boolean remove(Object o) {
-        if (o == null) {
-            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
-                if (x.item == null) {
-                    unlink(x);
-                    return true;
-                }
-            }
-        } else {
-            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
-                if (o.equals(x.item)) {
-                    unlink(x);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-</code></pre><p>遍历整个LinkedList中元素，寻找匹配的元素</p>
-<p>删除时只需要直接删除链表上的当前元素，并将当前元素的item，next即prev属性设置为null</p>
-<h4 id="get-int"><a href="#get-int" class="headerlink" title="get(int)"></a>get(int)</h4><pre><code>public E get(int index) {
-        checkElementIndex(index);
-        return node(index).item;
-    }
-Node&lt;E&gt; node(int index) {
-        // assert isElementIndex(index);
-    //看获取的位置是否小于LinkedList值的一半，如小于则从头找，否则从队列尾部查找
-        if (index &lt; (size &gt;&gt; 1)) {
-            Node&lt;E&gt; x = first;
-            for (int i = 0; i &lt; index; i++)
-                x = x.next;
-            return x;
-        } else {
-            Node&lt;E&gt; x = last;
-            for (int i = size - 1; i &gt; index; i--)
-                x = x.prev;
-            return x;
-        }
-    }
-</code></pre><p>首先需要判断index值是否小于0或者大于/等于当前LinkedList的size，不符合抛出IndexOutOfBoundsException</p>
-<p>然后判断获取的位置是否小于LinkedList值的一半，如小于则从头找，否则从队列尾部查找</p>
-<h4 id="iterator"><a href="#iterator" class="headerlink" title="iterator()"></a>iterator()</h4><p>iterator方法由父类AbstractList实现，当调用iterator方法时，每次都会创建一个ListItr对象，创建时该对象负责保存cursor位置</p>
-<p>当调用iterator返回遍历对象的hasNext方法时，判断当前cursor的位置是否等于LinkedList的size变量，如等于返回true，不等于返回false</p>
-<p>当调用iterator返回遍历对象的next方法，调用get方法实现，传入出入cursor位置，即可获得相应的元素对象。遍历过程中元素增加或删除，会抛出ConcurrentModificationException</p>
-<p>LinkedList是基于双向链接实现的，因此遍历还可往前遍历，调用hasPrevious方法和previous完成遍历</p>
-<h4 id="contains-E"><a href="#contains-E" class="headerlink" title="contains(E)"></a>contains(E)</h4><pre><code>public boolean contains(Object o) {
-        return indexOf(o) != -1;
-    }
-public int indexOf(Object o) {
-        int index = 0;
-        if (o == null) {
-            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
-                if (x.item == null)
-                    return index;
-                index++;
-            }
-        } else {
-            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
-                if (o.equals(x.item))
-                    return index;
-                index++;
-            }
-        }
-        return -1;
-    }
-</code></pre><p>遍历比较元素，首先判断是否为null，是null则找null元素，不是则找到equals元素。</p>
-<h3 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h3><p>（1）LinkedList是基于双向链表机制实现的；</p>
-<p>（2）LinkedList在插入元素时，需创建一个新的Node对象，并切换前后的双向引用；</p>
-<p>（3）LinkedList是非线程安全的</p>
+</code></pre><p>add方法是线程安全的，其他基本和ArrayList相同。不同点是数组大小不够时，扩大数组策略不同：</p>
+<p>如果capacityIncrement大于0,则将Object数组大小扩大到现有size+capacityIncrement的值；</p>
+<p>如果capacityIncrement小于等于0，则将Object数组大小扩大为现有size的两倍</p>
+<p>容量控制策略比ArrayList更为可控</p>
+<h3 id="remove-E-、get-int"><a href="#remove-E-、get-int" class="headerlink" title="remove(E)、get(int)"></a>remove(E)、get(int)</h3><p>除调用的removeElement方法加上synchronized关键字外，其他和ArrayList完全相同</p>
+<h3 id="iterator"><a href="#iterator" class="headerlink" title="iterator()"></a>iterator()</h3><p>和ArrayList方法完全相同。</p>
+<h3 id="contains-E"><a href="#contains-E" class="headerlink" title="contains(E)"></a>contains(E)</h3><p>与ArrayList唯一不同是indexOf方法是有synchronized关键字的</p>
+<h3 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h3><p>vector是基于synchronized实现线程安全的Ar</p>
 
       
 
@@ -372,7 +295,7 @@ public int indexOf(Object o) {
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/21/LinkedList/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/21/Vector/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -386,18 +309,9 @@ public int indexOf(Object o) {
   
 <nav id="article-nav">
   
-    <a href="/2018/02/21/Vector/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Vector
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/02/01/避免活跃性危险/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">避免活跃性危险</div>
+    <a href="/2018/02/21/LinkedList/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LinkedList</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -427,7 +341,7 @@ public int indexOf(Object o) {
   
 
   
-  <div id="SOHUCS" sid="LinkedList" ></div> 
+  <div id="SOHUCS" sid="Vector" ></div> 
 <script type="text/javascript"> 
 window.YiliaChangyanWrap = function() {
     var appid = "true"; 
