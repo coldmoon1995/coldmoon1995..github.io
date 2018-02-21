@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="LuoYupeng Blog">
 <meta property="og:description" content="创建：ArrayList()private static final int DEFAULT_CAPACITY = 10; public ArrayList(int initialCapacity) {         if (initialCapacity &amp;gt; 0) {             this.elementData = new Object[initialCapacity];">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-21T14:48:04.710Z">
+<meta property="og:updated_time" content="2018-02-21T15:13:43.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList">
 <meta name="twitter:description" content="创建：ArrayList()private static final int DEFAULT_CAPACITY = 10; public ArrayList(int initialCapacity) {         if (initialCapacity &amp;gt; 0) {             this.elementData = new Object[initialCapacity];">
@@ -163,7 +163,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="创建：ArrayList"><a href="#创建：ArrayList" class="headerlink" title="创建：ArrayList()"></a>创建：ArrayList()</h4><pre><code>private static final int DEFAULT_CAPACITY = 10;
+        <h3 id="创建：ArrayList"><a href="#创建：ArrayList" class="headerlink" title="创建：ArrayList()"></a>创建：ArrayList()</h3><pre><code>private static final int DEFAULT_CAPACITY = 10;
 public ArrayList(int initialCapacity) {
         if (initialCapacity &gt; 0) {
             this.elementData = new Object[initialCapacity];
@@ -183,7 +183,7 @@ public ArrayList(int initialCapacity) {
     }
 </code></pre><p>ArrayList是采用数组方式存放对象，默认数组大小为10。</p>
 <a id="more"></a>
-<h4 id="插入对象：add-E"><a href="#插入对象：add-E" class="headerlink" title="插入对象：add(E)"></a>插入对象：add(E)</h4><pre><code>public boolean add(E e) {
+<h3 id="插入对象：add-E"><a href="#插入对象：add-E" class="headerlink" title="插入对象：add(E)"></a>插入对象：add(E)</h3><pre><code>public boolean add(E e) {
         ensureCapacityInternal(size + 1);  // Increments modCount!!
         elementData[size++] = e;
         return true;
@@ -209,7 +209,7 @@ private void grow(int minCapacity) {
 </code></pre><p>当调用add方法时，首先基于ArrayList中已有元素数量+1，产生一个minCapacity的变量，然后比较该变量和Object数组大小</p>
 <p>如果大于Object数组值，则将当前Object数组值赋给一个数组对象，接着产生一个新的数组容量值。</p>
 <p>计算方法：当前数组值*1.5+1，如果得出的容量值仍然小于minCapacity，那么就以minCapacity最为新的容量值，调用Arrays.copyOf来生成新的数组对象。</p>
-<h4 id="删除对象：remove-E"><a href="#删除对象：remove-E" class="headerlink" title="删除对象：remove(E)"></a>删除对象：remove(E)</h4><pre><code>public boolean remove(Object o) {
+<h3 id="删除对象：remove-E"><a href="#删除对象：remove-E" class="headerlink" title="删除对象：remove(E)"></a>删除对象：remove(E)</h3><pre><code>public boolean remove(Object o) {
         if (o == null) {
             for (int index = 0; index &lt; size; index++)
                 if (elementData[index] == null) {
@@ -243,29 +243,29 @@ public E remove(int index) {
 </code></pre><p>首先判断对象是否为null，如为null，则遍历数组中已有元素，比较是否为null</p>
 <p>如为null则调用fastRemove删除相应位置的对象</p>
 <p>若不是null，唯一不同是调用E的equal方法比较元素值是否相同</p>
-<h4 id="获取单个对象：get-int"><a href="#获取单个对象：get-int" class="headerlink" title="获取单个对象：get(int)"></a>获取单个对象：get(int)</h4><pre><code>public E get(int index) {
+<h3 id="获取单个对象：get-int"><a href="#获取单个对象：get-int" class="headerlink" title="获取单个对象：get(int)"></a>获取单个对象：get(int)</h3><pre><code>public E get(int index) {
             rangeCheck(index);
             checkForComodification();
             return ArrayList.this.elementData(offset + index);
         }
 </code></pre><p>仅先做范围检测，即可返回此位置的对象。</p>
-<h4 id="遍历对象：iterator"><a href="#遍历对象：iterator" class="headerlink" title="遍历对象：iterator()"></a>遍历对象：iterator()</h4><p>iterator是由ArrayList的父类AbstractList实现，每次调用iterator时，都会创建一个AbstractList内部类Itr的实例。</p>
+<h3 id="遍历对象：iterator"><a href="#遍历对象：iterator" class="headerlink" title="遍历对象：iterator()"></a>遍历对象：iterator()</h3><p>iterator是由ArrayList的父类AbstractList实现，每次调用iterator时，都会创建一个AbstractList内部类Itr的实例。</p>
 <p>当调用实例的hasNext方法，判断当前指向数组的位置是否和数组中已有元素的大小相等，相等返回true否则false</p>
 <p>当调用next方法时，首先比较在此Iterator时获取的modCount与目前的modCount，如果两个modCount不相等，则说明在获取next元素时，发生了对集合大小产生影响（新增、删除）动作，此时抛出ConcurrentModificationException。</p>
 <p>如果modCount相等，则调用get方法来获取相应位置的元素，如果get不到，在IndexOutOfBoundsException异常后，检测modCount，如相等，则抛出NoSuchElementException，如不相等，则抛出ConcurrentModificationException。</p>
-<h4 id="判断对象是否存在：contains-E"><a href="#判断对象是否存在：contains-E" class="headerlink" title="判断对象是否存在：contains(E)"></a>判断对象是否存在：contains(E)</h4><p>遍历整个ArrayList，如E为null，则直接判断是否有null元素</p>
+<h3 id="判断对象是否存在：contains-E"><a href="#判断对象是否存在：contains-E" class="headerlink" title="判断对象是否存在：contains(E)"></a>判断对象是否存在：contains(E)</h3><p>遍历整个ArrayList，如E为null，则直接判断是否有null元素</p>
 <p>如E不为null，则通过E.equals方法判断是否存在</p>
-<h3 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h3><pre><code>i. ArrayList基于数组方式实现，无容量限制
+<h2 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h2><pre><code>i. ArrayList基于数组方式实现，无容量限制
 
 ii. ArrayList在执行插入操作是可能要扩容，在删除元素时，并不会减少数组的容量（如果希望相应缩小数组容量，可以调用ArrayList的trimToSize()），在查找元素时要遍历数组，对于非null元素，采用equals方式寻找。
 
 iii. ArrayList是非线程安全的
-</code></pre><h3 id="ArrayList和LinkedList的区别"><a href="#ArrayList和LinkedList的区别" class="headerlink" title="ArrayList和LinkedList的区别"></a>ArrayList和LinkedList的区别</h3><pre><code>1. ArrayList是实现了基于动态数组的数据结构，LinkedList基于链表的数据结构。
+</code></pre><h2 id="ArrayList和LinkedList的区别"><a href="#ArrayList和LinkedList的区别" class="headerlink" title="ArrayList和LinkedList的区别"></a>ArrayList和LinkedList的区别</h2><pre><code>1. ArrayList是实现了基于动态数组的数据结构，LinkedList基于链表的数据结构。
 
 2. 对于随机访问get和set，ArrayList觉得优于LinkedList，因为LinkedList要移动指针。
 
 3. 对于新增和删除操作add和remove，LinkedList比较占优势，因为ArrayList要移动数据。
-</code></pre><h3 id="ArrayList和Vector的区别"><a href="#ArrayList和Vector的区别" class="headerlink" title="ArrayList和Vector的区别"></a>ArrayList和Vector的区别</h3><pre><code>1. Vector和ArrayList几乎是完全相同的,唯一的区别在于Vector是同步类(synchronized)，属于强同步类。因此开销就比ArrayList要大，访问要慢。正常情况下,大多数的Java程序员使用ArrayList而不是Vector,因为同步完全可以由程序员自己来控制。
+</code></pre><h2 id="ArrayList和Vector的区别"><a href="#ArrayList和Vector的区别" class="headerlink" title="ArrayList和Vector的区别"></a>ArrayList和Vector的区别</h2><pre><code>1. Vector和ArrayList几乎是完全相同的,唯一的区别在于Vector是同步类(synchronized)，属于强同步类。因此开销就比ArrayList要大，访问要慢。正常情况下,大多数的Java程序员使用ArrayList而不是Vector,因为同步完全可以由程序员自己来控制。
 
 2. Vector每次扩容请求其大小的2倍空间，而ArrayList是1.5倍。
 
@@ -525,14 +525,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">算法题</a>
               </li>
              
@@ -541,11 +533,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java并发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -554,6 +546,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Java集合容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">多线程</a>
               </li>
              
               <li class="article-tag-list-item">
