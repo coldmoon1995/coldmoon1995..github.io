@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/1 | LuoYupeng Blog</title>
+  <title>LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="LuoYupeng Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/01/index.html">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -140,100 +140,101 @@
           <div id="js-content" class="content-ll">
             
   
-  
+    <article id="post-二分" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/23/任务执行/" class="archive-article-date">
-  	<time datetime="2018-01-23T02:45:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-23</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/23/任务执行/">任务执行</a>
+      <a class="article-title" href="/2017/09/15/二分/">二分</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/09/15/二分/" class="archive-article-date">
+  	<time datetime="2017-09-15T03:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="二分查找（Binary-Search"><a href="#二分查找（Binary-Search" class="headerlink" title="二分查找（Binary Search)"></a>二分查找（Binary Search)</h4><p>序列为递增（递减写法相同，需改变判断条件）</p>
+<h5 id="1）在序列中查找元素为x的元素的位置，没找到返回-1"><a href="#1）在序列中查找元素为x的元素的位置，没找到返回-1" class="headerlink" title="1）在序列中查找元素为x的元素的位置，没找到返回-1"></a>1）在序列中查找元素为x的元素的位置，没找到返回-1</h5><p>代码：</p>
+<pre><code>public int binarySearch(int x,int left,int right){
+    while(left&lt;=right){
+        int mid=left+(right-left)/2; //防止right+left超出int范围
+        if(x&lt;A[mid]) 
+            right=mid-1;
+        else if(x&gt;A[mid]) 
+            left=mid+1;
+        else
+            return mid;
+    }
+    return -1;
+}
+</code></pre>
+        
+          <a class="article-more-a" href="/2017/09/15/二分/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java并发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/15/二分/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/18/ArrayList/" class="archive-article-date">
-  	<time datetime="2018-01-18T08:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/18/ArrayList/">ArrayList</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JDK源码</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
   
-
-    
 
 
           </div>
@@ -252,9 +253,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
+		isHome: true,
 		isPost: false,
-		isArchive: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/1 | LuoYupeng Blog</title>
+  <title>LinkedList | LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="LuoYupeng Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/01/index.html">
+  <meta name="description" content="LinkedList基于双向链表机制（即集合每个元素都知道其前一个元素和后一个元素） LinkedList定义：package java.util; public class LinkedList&amp;lt;E&amp;gt; extends AbstractSequentialList&amp;lt;E&amp;gt;     implements List&amp;lt;E&amp;gt;, Deque&amp;lt;E&amp;gt;, Clonea">
+<meta name="keywords" content="JDK源码,Java集合容器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LinkedList">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/LinkedList/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
+<meta property="og:description" content="LinkedList基于双向链表机制（即集合每个元素都知道其前一个元素和后一个元素） LinkedList定义：package java.util; public class LinkedList&amp;lt;E&amp;gt; extends AbstractSequentialList&amp;lt;E&amp;gt;     implements List&amp;lt;E&amp;gt;, Deque&amp;lt;E&amp;gt;, Clonea">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-21T14:40:27.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LuoYupeng Blog">
+<meta name="twitter:title" content="LinkedList">
+<meta name="twitter:description" content="LinkedList基于双向链表机制（即集合每个元素都知道其前一个元素和后一个元素） LinkedList定义：package java.util; public class LinkedList&amp;lt;E&amp;gt; extends AbstractSequentialList&amp;lt;E&amp;gt;     implements List&amp;lt;E&amp;gt;, Deque&amp;lt;E&amp;gt;, Clonea">
   
     <link rel="alternative" href="/atom.xml" title="LuoYupeng Blog" type="application/atom+xml">
   
@@ -138,78 +143,170 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-LinkedList" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/23/任务执行/" class="archive-article-date">
-  	<time datetime="2018-01-23T02:45:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-23</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/23/任务执行/">任务执行</a>
+    <h1 class="article-title" itemprop="name">
+      LinkedList
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java并发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/18/ArrayList/" class="archive-article-date">
-  	<time datetime="2018-01-18T08:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
+        
+        <a href="/2018/02/21/LinkedList/" class="archive-article-date">
+  	<time datetime="2018-02-21T14:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-21</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/18/ArrayList/">ArrayList</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>LinkedList基于双向链表机制（即集合每个元素都知道其前一个元素和后一个元素）</strong></p>
+<h4 id="LinkedList定义："><a href="#LinkedList定义：" class="headerlink" title="LinkedList定义："></a>LinkedList定义：</h4><pre><code>package java.util;
+public class LinkedList&lt;E&gt; extends AbstractSequentialList&lt;E&gt;
+    implements List&lt;E&gt;, Deque&lt;E&gt;, Cloneable, java.io.Serializable{
+    transient int size = 0;
+    transient Node&lt;E&gt; first;
+    transient Node&lt;E&gt; last;
+}
+</code></pre><p>LinkedList中以内部的Node类来代替集合中的元素</p>
+<a id="more"></a>
+<pre><code>private static class Node&lt;E&gt; {
+        E item;
+        Node&lt;E&gt; next;
+        Node&lt;E&gt; prev;
+        Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+</code></pre><h4 id="add-E"><a href="#add-E" class="headerlink" title="add(E)"></a>add(E)</h4><p>链表无容量限制，但双向链表本身使用了更多空间，也需要额外的链表指针操作。 </p>
+<pre><code>public boolean add(E e) {
+        linkLast(e);
+        return true;
+    }
+void linkLast(E e) {
+        final Node&lt;E&gt; l = last;
+        final Node&lt;E&gt; newNode = new Node&lt;&gt;(l, e, null);
+        last = newNode;
+        if (l == null)
+            first = newNode;
+        else
+            l.next = newNode;
+        size++;
+        modCount++;
+    }
+</code></pre><h4 id="remove-E"><a href="#remove-E" class="headerlink" title="remove(E)"></a>remove(E)</h4><pre><code>public boolean remove(Object o) {
+        if (o == null) {
+            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
+                if (x.item == null) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        } else {
+            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
+                if (o.equals(x.item)) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+</code></pre><p>遍历整个LinkedList中元素，寻找匹配的元素</p>
+<p>删除时只需要直接删除链表上的当前元素，并将当前元素的item，next即prev属性设置为null</p>
+<h4 id="get-int"><a href="#get-int" class="headerlink" title="get(int)"></a>get(int)</h4><pre><code>public E get(int index) {
+        checkElementIndex(index);
+        return node(index).item;
+    }
+Node&lt;E&gt; node(int index) {
+        // assert isElementIndex(index);
+    //看获取的位置是否小于LinkedList值的一半，如小于则从头找，否则从队列尾部查找
+        if (index &lt; (size &gt;&gt; 1)) {
+            Node&lt;E&gt; x = first;
+            for (int i = 0; i &lt; index; i++)
+                x = x.next;
+            return x;
+        } else {
+            Node&lt;E&gt; x = last;
+            for (int i = size - 1; i &gt; index; i--)
+                x = x.prev;
+            return x;
+        }
+    }
+</code></pre><p>首先需要判断index值是否小于0或者大于/等于当前LinkedList的size，不符合抛出IndexOutOfBoundsException</p>
+<p>然后判断获取的位置是否小于LinkedList值的一半，如小于则从头找，否则从队列尾部查找</p>
+<h4 id="iterator"><a href="#iterator" class="headerlink" title="iterator()"></a>iterator()</h4><p>iterator方法由父类AbstractList实现，当调用iterator方法时，每次都会创建一个ListItr对象，创建时该对象负责保存cursor位置</p>
+<p>当调用iterator返回遍历对象的hasNext方法时，判断当前cursor的位置是否等于LinkedList的size变量，如等于返回true，不等于返回false</p>
+<p>当调用iterator返回遍历对象的next方法，调用get方法实现，传入出入cursor位置，即可获得相应的元素对象。遍历过程中元素增加或删除，会抛出ConcurrentModificationException</p>
+<p>LinkedList是基于双向链接实现的，因此遍历还可往前遍历，调用hasPrevious方法和previous完成遍历</p>
+<h4 id="contains-E"><a href="#contains-E" class="headerlink" title="contains(E)"></a>contains(E)</h4><pre><code>public boolean contains(Object o) {
+        return indexOf(o) != -1;
+    }
+public int indexOf(Object o) {
+        int index = 0;
+        if (o == null) {
+            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
+                if (x.item == null)
+                    return index;
+                index++;
+            }
+        } else {
+            for (Node&lt;E&gt; x = first; x != null; x = x.next) {
+                if (o.equals(x.item))
+                    return index;
+                index++;
+            }
+        }
+        return -1;
+    }
+</code></pre><p>遍历比较元素，首先判断是否为null，是null则找null元素，不是则找到equals元素。</p>
+<h3 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h3><p>（1）LinkedList是基于双向链表机制实现的；</p>
+<p>（2）LinkedList在插入元素时，需创建一个新的Node对象，并切换前后的双向引用；</p>
+<p>（3）LinkedList是非线程安全的</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>如果您觉得我的文章对您有用，请随意打赏。<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -217,23 +314,125 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JDK源码</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Java集合容器</a>
+        		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/21/LinkedList/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/02/01/避免活跃性危险/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">避免活跃性危险</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+  <div id="SOHUCS" sid="LinkedList" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "true"; 
+    var conf = "true"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -253,8 +452,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
