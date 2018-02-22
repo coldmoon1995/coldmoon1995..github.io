@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 算法题 | LuoYupeng Blog</title>
+  <title>HashMap | LuoYupeng Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="LuoYupeng Blog">
-<meta property="og:url" content="http://yoursite.com/tags/算法题/index.html">
+  <meta name="description" content="工作原理：通过hash的方法，通过put和get存储和获取对象。存储对象时，我们将K/V传给put方法时，它调用hashCode计算hash从而得到bucket位置，进一步存储，HashMap会根据当前bucket的占用情况自动调整容量(超过Load Factor则resize为原来的2倍)。获取对象时，我们将K传给get，它调用hashCode计算hash从而得到bucket位置，并进一步调用e">
+<meta name="keywords" content="JDK源码,Java集合容器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap">
+<meta property="og:url" content="http://yoursite.com/2018/02/22/HashMap/index.html">
 <meta property="og:site_name" content="LuoYupeng Blog">
+<meta property="og:description" content="工作原理：通过hash的方法，通过put和get存储和获取对象。存储对象时，我们将K/V传给put方法时，它调用hashCode计算hash从而得到bucket位置，进一步存储，HashMap会根据当前bucket的占用情况自动调整容量(超过Load Factor则resize为原来的2倍)。获取对象时，我们将K传给get，它调用hashCode计算hash从而得到bucket位置，并进一步调用e">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-22T15:01:05.587Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LuoYupeng Blog">
+<meta name="twitter:title" content="HashMap">
+<meta name="twitter:description" content="工作原理：通过hash的方法，通过put和get存储和获取对象。存储对象时，我们将K/V传给put方法时，它调用hashCode计算hash从而得到bucket位置，进一步存储，HashMap会根据当前bucket的占用情况自动调整容量(超过Load Factor则resize为原来的2倍)。获取对象时，我们将K传给get，它调用hashCode计算hash从而得到bucket位置，并进一步调用e">
   
     <link rel="alternative" href="/atom.xml" title="LuoYupeng Blog" type="application/atom+xml">
   
@@ -138,64 +143,339 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-HashMap" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/17/2017年PAT春季考试/" class="archive-article-date">
-  	<time datetime="2017-09-17T13:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-17</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/17/2017年PAT春季考试/">2017年9月PAT-A考试</a>
+    <h1 class="article-title" itemprop="name">
+      HashMap
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/02/22/HashMap/" class="archive-article-date">
+  	<time datetime="2018-02-22T15:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="工作原理："><a href="#工作原理：" class="headerlink" title="工作原理："></a>工作原理：</h3><p>通过hash的方法，通过put和get存储和获取对象。存储对象时，我们将K/V传给put方法时，它调用hashCode计算hash从而得到bucket位置，进一步存储，HashMap会根据当前bucket的占用情况自动调整容量(超过Load Factor则resize为原来的2倍)。获取对象时，我们将K传给get，它调用hashCode计算hash从而得到bucket位置，并进一步调用equals()方法确定键值对。如果发生碰撞的时候，Hashmap通过链表将产生碰撞冲突的元素组织起来，在Java 8中，如果一个bucket中碰撞冲突的元素超过某个限制(默认是8)，则使用红黑树来替换链表，从而提高速度。 </p>
+<p>基于Map接口实现、允许null键/值、非同步、不保证有序(比如插入的顺序)、也不保证序不随时间变化。HashMap存储着Entry(hash, key, value, next)对象。 </p>
+<p>当key==null时，存在table[0]即第一个桶中，hash值为0。HashMap对key==null的键值对会做单独处理</p>
+<a id="more"></a>
+<h3 id="实现方式："><a href="#实现方式：" class="headerlink" title="实现方式："></a>实现方式：</h3><pre><code>public HashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
+    }
+public HashMap(int initialCapacity) {
+        this(initialCapacity, DEFAULT_LOAD_FACTOR);
+    }
+public HashMap(int initialCapacity, float loadFactor) {
+        if (initialCapacity &lt; 0)
+            throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +
+                                               initialCapacity);
+        if (initialCapacity &gt; MAXIMUM_CAPACITY)
+            initialCapacity = MAXIMUM_CAPACITY;
+        if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
+            throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +
+                                               loadFactor);
+        this.loadFactor = loadFactor;
+        this.threshold = tableSizeFor(initialCapacity);
+    }
+
+transient Node&lt;K,V&gt;[] table;
+static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; {
+        final int hash;
+        final K key;
+        V value;
+        Node&lt;K,V&gt; next;
+}
+</code></pre><p>默认loadFactor为0.75，threshold设置为12，并创建一个大小为16的Node对象数组</p>
+<p>在HashMap中有两个很重要的参数，容量(Capacity)和负载因子(Load factor)。<br>      <br>Capacity的默认值为16： static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; </p>
+<p>负载因子的默认值为0.75： static final float DEFAULT_LOAD_FACTOR = 0.75f;<br>      <br>简单的说，Capacity就是bucket的大小，Load factor就是bucket填满程度的最大比例。如果对迭代性能要求很高的话不要把Capacity设置过大，也不要把load factor设置过小。当bucket中的entries的数目大于capacity*load factor时就需要调整bucket的大小为当前的2倍。<br>      <br>可以设置初始容量Capacity，但是在HashMap处理过程中，是会把Capacity扩充成2的倍数，比如你设置的初始值17，但是17不是2的整数倍，会扩容成32，再比如你初始设置的是15，会扩容成16，具体的实现在下面：</p>
+<pre><code>private static int roundUpToPowerOf2(int number) {
+       // assert number &gt;= 0 : &quot;number must be non-negative&quot;;
+       return number &gt;= MAXIMUM_CAPACITY
+               ? MAXIMUM_CAPACITY
+               : (number &gt; 1) ? Integer.highestOneBit((number - 1) &lt;&lt; 1) : 1;
+   }
+
+  
+</code></pre><p>HashMap中有一个成员变量modCount，这个用来实现“fast-fail”机制（也就是快速失败）。所谓快速失败就是在并发集合中，其进行迭代操作时，若有其他线程对其结构性的修改，这是迭代器会立马感知到，并且立刻抛出ConcurrentModificationException异常</p>
+<h3 id="put-K-key-V-value"><a href="#put-K-key-V-value" class="headerlink" title="put(K key,V value)"></a>put(K key,V value)</h3><pre><code>public V put(K key, V value) {
+        return putVal(hash(key), key, value, false, true);
+    }
+final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+                   boolean evict) {
+
+        Node&lt;K,V&gt;[] tab; 
+        Node&lt;K,V&gt; p; 
+        int n, i;
+        //如果table空，初始化table数组
+        if ((tab = table) == null || (n = tab.length) == 0)
+            n = (tab = resize()).length;
+
+        //查到i出元素为空 ，则在i位置新增Node元素
+        //注：此处i = (n - 1) &amp; hash此方法即是jdk1.7中的indexFor方法，通过数学位运算，取的一个在table的长度范围内的值）
+        if ((p = tab[i = (n - 1) &amp; hash]) == null) //没有查到key ，新增节点
+            tab[i] = newNode(hash, key, value, null);
+        else {
+            Node&lt;K,V&gt; e; K k;
+            //索引处的key值和key的hash值匹配，则直接把p节点指针传给临时变量e
+            if (p.hash == hash &amp;&amp;
+                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
+                e = p;
+            else if (p instanceof TreeNode)//如果p节点是红黑树，特殊处理
+                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);
+            else {//遍历链表，处理key值的hash冲突情况
+                for (int binCount = 0; ; ++binCount) {
+                    if ((e = p.next) == null) {//在链表结尾处新增节点
+                        p.next = newNode(hash, key, value, null);//链表原末尾元素next指向先创建的元素
+                        if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                            treeifyBin(tab, hash);
+                        break;
+                    }
+                    if (e.hash == hash &amp;&amp;
+                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))//检查key值和hash值是否同时相同
+                        break;
+                    p = e;
+                }
+            }
+            if (e != null) { // existing mapping for key  将新value值存放到节点处
+                V oldValue = e.value;
+                if (!onlyIfAbsent || oldValue == null)
+                    e.value = value;
+                afterNodeAccess(e);
+                return oldValue;
+            }
+        }
+        ++modCount;
+        if (++size &gt; threshold)
+            resize();
+        afterNodeInsertion(evict);
+        return null;
+    }
+</code></pre><p>a. 先判断table(存放bullet的数组，初始类定义：Node<k,v>[] tab; 是否为空，如果为空则扩充table，其中包括确保table的大小为2的整数倍。</k,v></p>
+<p>b. 如果key值为null，则特殊处理，调用putForNullKey(V value)，hash值为0，存入table中，返回。</p>
+<p>c. 如果key值不为null，则计算key的hash值；</p>
+<p>d. 然后计算key在table中的索引index;</p>
+<p>e. 遍历table[index]的链表，如果发现链表中有bullet中的键的hash值与key相等，并且调用equals()方法也返回true，则替换旧值（oldValue），保证key的唯一性；</p>
+<p>f. 如果没有，在插入之前先判断table中阈值的大小，如果table中的bullet个数size超过阈值（threshold）则扩容（resize）两倍；注意扩容的顺序，扩容之前old1-&gt;old2-&gt;old3，扩容之后old3-&gt;old2-&gt;old1，扩展之前和扩容之后的table的index不一定相同，但是对于原bullet中的链表中的数据在扩容之后肯定还在一个链表中，因为hash值是一样的。</p>
+<p>g. 插入新的bullet。注意插入的顺序，原先table[index]的链表比如 old1-&gt;old2-&gt;old3，插入新值之后为new1-&gt;old1-&gt;old2-&gt;old3.</p>
+<p>在jdk8中，新增默认为8的閥值（TREEIFY_THRESHOLD），当一个桶里的Entry超过閥值，就不以单向链表而以红黑树来存放以加快Key的查找速度。</p>
+<pre><code>hash方法：
+    static final int hash(Object key) {
+            int h;
+            return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);
+        }
+</code></pre><h3 id="get-K"><a href="#get-K" class="headerlink" title="get(K)"></a>get(K)</h3><pre><code>public V get(Object key) {
+        Node&lt;K,V&gt; e;
+        return (e = getNode(hash(key), key)) == null ? null : e.value;
+    }
+final Node&lt;K,V&gt; getNode(int hash, Object key) {
+        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; int n; K k;
+        if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;
+            (first = tab[(n - 1) &amp; hash]) != null) {
+            if (first.hash == hash &amp;&amp; // always check first node
+                ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))
+                return first;
+            if ((e = first.next) != null) {
+                if (first instanceof TreeNode)
+                    return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);
+                do {
+                    if (e.hash == hash &amp;&amp;
+                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+                        return e;
+                } while ((e = e.next) != null);
+            }
+        }
+        return null;
+    }
+</code></pre><p>a. 判断key值是否为null，如果是则特殊处理（在table[0]的链表中寻找）</p>
+<p>b. 否则计算hash值，进而获得table中的index值</p>
+<p>c. 在table[index]的链表中寻找或在红黑树中寻找，根据hash值和equals()方法获得相应的value。</p>
+<h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><p>HashMap实现了Serializable接口，但是对table的定义（transient Node<k,v>[] table;）却是transient的。然后又自己实现了writeObject()和readObject()两个方法。</k,v></p>
+<p>声明为transient的变量不再是对象持久化的一部分。</p>
+<p>原因有两点：</p>
+<ol>
+<li><p>HashMap的put与get基于hashCode的实现，而hashCode是native方法，对每一个不同的java环境来说，同一个key所计算的hashCode是不相同的，所以反序列化后table的index会发生变化，无法还原</p>
+</li>
+<li><p>HashMap默认size到达阈值threshold之后进行扩容，很明显HashMap不可能保证每一个bullet都有数据，很多都为null，如果对这部分数据进行序列化则造成不必要的资源浪费。</p>
+</li>
+</ol>
+<p>由于Java自身的序列化有明显的缺点：占用空间大以及低效</p>
+<h2 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h2><pre><code>（1）HashMap采用数组方式存储key/value构成的Node对象，无容量限制
+（2）HashMap是基于key hash寻找Node对象存放到数组中的位置，对hash冲突采用链表方式解决（超过8用红黑树）
+（3）HashMap在插入元素时，可能要扩大数组容量，扩大容量时需重新计算hash，并复制到新的数组
+（4）HashMap是非线程安全的
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>如果您觉得我的文章对您有用，请随意打赏。<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/Wepay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">算法题</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JDK源码</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Java集合容器</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2018/02/22/HashMap/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/02/22/Stack/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Stack</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+  <div id="SOHUCS" sid="HashMap" ></div> 
+<script type="text/javascript"> 
+window.YiliaChangyanWrap = function() {
+    var appid = "true"; 
+    var conf = "true"; 
+    var width = window.innerWidth || document.documentElement.clientWidth; 
+    if (width < 960) { 
+    window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); }
+}
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -215,9 +495,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
