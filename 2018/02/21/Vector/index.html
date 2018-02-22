@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="LuoYupeng Blog">
 <meta property="og:description" content="Vector和ArrayList一样是基于Object数组方式实现的。 Vector() public Vector(int initialCapacity, int capacityIncrement) {         super();         if (initialCapacity &amp;lt; 0)             throw new IllegalArgumentExcep">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-21T15:08:19.504Z">
+<meta property="og:updated_time" content="2018-02-22T01:34:53.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vector">
 <meta name="twitter:description" content="Vector和ArrayList一样是基于Object数组方式实现的。 Vector() public Vector(int initialCapacity, int capacityIncrement) {         super();         if (initialCapacity &amp;lt; 0)             throw new IllegalArgumentExcep">
@@ -190,7 +190,7 @@ public Vector() {
 <h3 id="remove-E-、get-int"><a href="#remove-E-、get-int" class="headerlink" title="remove(E)、get(int)"></a>remove(E)、get(int)</h3><p>除调用的removeElement方法加上synchronized关键字外，其他和ArrayList完全相同</p>
 <h3 id="iterator"><a href="#iterator" class="headerlink" title="iterator()"></a>iterator()</h3><p>和ArrayList方法完全相同。</p>
 <h3 id="contains-E"><a href="#contains-E" class="headerlink" title="contains(E)"></a>contains(E)</h3><p>与ArrayList唯一不同是indexOf方法是有synchronized关键字的</p>
-<h3 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h3><p>vector是基于synchronized实现线程安全的Ar</p>
+<h3 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h3><p>vector是基于synchronized实现线程安全的的ArrayList，但插入机制和ArrayList稍有不同，并可通过传入capacityIncrement来控制容量的扩充。</p>
 
       
 
@@ -308,6 +308,15 @@ public Vector() {
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/02/22/Stack/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Stack
+        
+      </div>
+    </a>
   
   
     <a href="/2018/02/21/LinkedList/" id="article-nav-older" class="article-nav-link-wrap">
@@ -445,19 +454,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">JDK源码</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Java集合容器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
