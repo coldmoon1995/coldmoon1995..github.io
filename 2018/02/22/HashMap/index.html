@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="LuoYupeng Blog">
 <meta property="og:description" content="工作原理：通过hash的方法，通过put和get存储和获取对象。存储对象时，我们将K/V传给put方法时，它调用hashCode计算hash从而得到bucket位置，进一步存储，HashMap会根据当前bucket的占用情况自动调整容量(超过Load Factor则resize为原来的2倍)。获取对象时，我们将K传给get，它调用hashCode计算hash从而得到bucket位置，并进一步调用e">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-22T15:01:05.587Z">
+<meta property="og:updated_time" content="2018-02-22T15:03:34.792Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashMap">
 <meta name="twitter:description" content="工作原理：通过hash的方法，通过put和get存储和获取对象。存储对象时，我们将K/V传给put方法时，它调用hashCode计算hash从而得到bucket位置，进一步存储，HashMap会根据当前bucket的占用情况自动调整容量(超过Load Factor则resize为原来的2倍)。获取对象时，我们将K传给get，它调用hashCode计算hash从而得到bucket位置，并进一步调用e">
@@ -80,7 +80,7 @@
 				
 					<a class="github" target="_blank" href="https://github.com/coldmoon1995" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="mail" target="_blank" href="mailto:411074929@qq.com" title="mail"><i class="icon-mail"></i></a>
+					<a class="mail" target="_blank" href="mailto:luoyupeng1995@foxmail.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 		</nav>
@@ -117,7 +117,7 @@
 					
 						<a class="github" target="_blank" href="https://github.com/coldmoon1995" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="mail" target="_blank" href="mailto:411074929@qq.com" title="mail"><i class="icon-mail"></i></a>
+						<a class="mail" target="_blank" href="mailto:luoyupeng1995@foxmail.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
@@ -300,12 +300,8 @@ final Node&lt;K,V&gt; getNode(int hash, Object key) {
 <h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><p>HashMap实现了Serializable接口，但是对table的定义（transient Node<k,v>[] table;）却是transient的。然后又自己实现了writeObject()和readObject()两个方法。</k,v></p>
 <p>声明为transient的变量不再是对象持久化的一部分。</p>
 <p>原因有两点：</p>
-<ol>
-<li><p>HashMap的put与get基于hashCode的实现，而hashCode是native方法，对每一个不同的java环境来说，同一个key所计算的hashCode是不相同的，所以反序列化后table的index会发生变化，无法还原</p>
-</li>
-<li><p>HashMap默认size到达阈值threshold之后进行扩容，很明显HashMap不可能保证每一个bullet都有数据，很多都为null，如果对这部分数据进行序列化则造成不必要的资源浪费。</p>
-</li>
-</ol>
+<p>1.HashMap的put与get基于hashCode的实现，而hashCode是native方法，对每一个不同的java环境来说，同一个key所计算的hashCode是不相同的，所以反序列化后table的index会发生变化，无法还原</p>
+<p>2.HashMap默认size到达阈值threshold之后进行扩容，很明显HashMap不可能保证每一个bullet都有数据，很多都为null，如果对这部分数据进行序列化则造成不必要的资源浪费。</p>
 <p>由于Java自身的序列化有明显的缺点：占用空间大以及低效</p>
 <h2 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h2><pre><code>（1）HashMap采用数组方式存储key/value构成的Node对象，无容量限制
 （2）HashMap是基于key hash寻找Node对象存放到数组中的位置，对hash冲突采用链表方式解决（超过8用红黑树）
@@ -565,6 +561,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">算法题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
@@ -586,14 +590,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">算法题</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
@@ -644,7 +640,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">浙江大学本硕 热爱互联网</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">浙江大学本硕</div>
   	  	
     	</section>
     
